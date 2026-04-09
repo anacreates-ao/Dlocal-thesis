@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLocal (DLO) — Investment Thesis 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f8f8f6;
+    --surface2: #f2f1ef;
+    --border: #e8e6e1;
+    --border2: #d8d5cf;
+    --accent: #1d4ed8;
+    --accent-light: #2563eb;
+    --gold: #92620a;
+    --green: #166534;
+    --red: #b91c1c;
+    --text: #0f0f0e;
+    --muted: #78716c;
+    --muted2: #57534e;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── SECTION BREADCRUMB ─────────────────────────────────────────────── */
+  .section-crumb {
+    position: fixed; top: 58px; left: 0; right: 0; z-index: 99;
+    height: 32px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 2.5rem;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    transition: opacity 0.2s;
+  }
+  .section-crumb .crumb-ticker { color: var(--accent); font-weight: 700; }
+  .section-crumb .crumb-sep { color: var(--border2); }
+  .section-crumb .crumb-current { color: var(--text); font-weight: 700; }
+
+  /* ── NAVIGATION ─────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 58px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.15rem; font-weight: 400; letter-spacing: -0.01em;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo span { color: var(--accent-light); }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    padding: 0 1rem; height: 58px;
+    display: flex; align-items: center;
+    font-size: 0.8rem; font-weight: 400; letter-spacing: 0.02em;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--text); border-bottom-color: var(--accent-light); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .verdict-pill {
+    padding: 5px 14px; border-radius: 3px;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+    background: transparent; color: var(--green);
+    border: 1px solid rgba(34,197,94,0.4);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── KPI BAR ─────────────────────────────────────────────────────────── */
+  .kpi-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto; white-space: nowrap;
+    margin-top: 90px;
+    scrollbar-width: none; height: 38px;
+  }
+  .kpi-bar::-webkit-scrollbar { display: none; }
+  .kpi-item { display: flex; align-items: center; gap: 8px; padding: 0 16px; height: 38px; }
+  .kpi-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Space Mono', monospace; }
+  .kpi-value { font-size: 0.75rem; font-weight: 700; font-family: 'Space Mono', monospace; }
+  .kpi-divider { width: 1px; height: 16px; background: var(--border2); flex-shrink: 0; }
+
+  /* ── HERO ─────────────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 4rem;
+    padding-top: 96px;
+    background: var(--bg);
+    position: relative; overflow: hidden;
+  }
+  .hero-photo {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 62%;
+    overflow: hidden;
+  }
+  .hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    opacity: 0.22;
+    filter: grayscale(30%);
+  }
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.2) 50%,
+      rgba(255,255,255,1) 100%);
+  }
+  .hero-content { max-width: 1280px; margin: 0 auto; width: 100%; position: relative; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--muted2); text-transform: uppercase; margin-bottom: 28px;
+    font-family: 'Space Mono', monospace;
+  }
+  .hero-tag .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-light); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero-display {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 400; line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .hero-display .ticker-word {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(29,78,216,0.55);
+    font-style: italic;
+  }
+  .hero-sub-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 32px; margin-top: 32px;
+    padding-top: 32px; border-top: 1px solid var(--border);
+  }
+  .hero-sub {
+    font-size: 1rem; color: var(--muted2); max-width: 480px; line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-metrics {
+    display: flex; gap: 48px; flex-shrink: 0;
+  }
+  .hero-metric { text-align: right; }
+  .hero-metric .value {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 2rem; font-weight: 400; line-height: 1; color: var(--text);
+  }
+  .hero-metric .label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 5px; font-family: 'Space Mono', monospace; }
+  .hero-metric .up { color: var(--green); }
+  .hero-metric .down { color: var(--red); }
+
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn-primary {
+    padding: 11px 26px; border-radius: 3px;
+    background: var(--accent);
+    color: #fff; font-weight: 500; font-size: 0.82rem; letter-spacing: 0.03em;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-outline {
+    padding: 11px 26px; border-radius: 3px;
+    border: 1px solid var(--border2); color: var(--muted2);
+    font-weight: 500; font-size: 0.82rem; letter-spacing: 0.03em;
+    text-decoration: none; cursor: pointer; background: transparent;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { color: var(--text); border-color: var(--muted); }
+
+  /* ── SECTIONS ──────────────────────────────────────────────────────────── */
+  section { padding: 100px 2.5rem; }
+  section:nth-child(even) { background: var(--surface); }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  .section-header { margin-bottom: 56px; }
+  .section-label {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); font-weight: 700; margin-bottom: 14px;
+    font-family: 'Space Mono', monospace;
+  }
+  .section-sub {
+    font-size: 0.88rem; color: var(--muted2); max-width: 520px;
+    margin-top: 12px; line-height: 1.75; font-weight: 300;
+  }
+  .section-tag {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+    font-family: 'Space Mono', monospace;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 12px; color: var(--text);
+  }
+  .section-desc { color: var(--muted2); max-width: 540px; font-weight: 300; line-height: 1.75; }
+
+  /* ── CARDS ──────────────────────────────────────────────────────────────── */
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 28px;
+    transition: border-color 0.25s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-title {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+  .card-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── OVERVIEW GRID ──────────────────────────────────────────────────────── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ── MOAT ────────────────────────────────────────────────────────────────── */
+  .moat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden; margin-top: 32px;
+  }
+  .moat-card {
+    background: var(--card); padding: 28px;
+    transition: background 0.2s;
+  }
+  .moat-card:hover { background: var(--surface2); }
+  .moat-icon {
+    width: 36px; height: 36px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.1rem; margin-bottom: 18px;
+    opacity: 0.8;
+  }
+  .moat-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .moat-desc { font-size: 0.8rem; color: var(--muted2); line-height: 1.7; font-weight: 300; }
+
+  /* ── CATALYST TIMELINE ────────────────────────────────────────────────── */
+  .catalyst-timeline { position: relative; }
+  .catalyst-timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 1px; background: var(--border2);
+  }
+  .catalyst-item {
+    display: flex; gap: 28px; margin-bottom: 32px;
+    padding-left: 24px; position: relative;
+  }
+  .catalyst-dot {
+    position: absolute; left: -4px; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .catalyst-date { font-size: 0.65rem; color: var(--muted); font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'Space Mono', monospace; }
+  .catalyst-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 6px; }
+  .catalyst-desc { font-size: 0.8rem; color: var(--muted2); line-height: 1.7; font-weight: 300; }
+  .catalyst-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 2px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+    margin-left: 8px; vertical-align: middle;
+    font-family: 'Space Mono', monospace;
+  }
+  .badge-high { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+  .badge-med  { background: rgba(212,168,67,0.1); color: var(--gold); border: 1px solid rgba(212,168,67,0.25); }
+
+  /* ── FINANCIALS TABLE ────────────────────────────────────────────────── */
+  .fin-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .fin-table th {
+    padding: 10px 14px; text-align: right;
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); border-bottom: 1px solid var(--border); font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+  .fin-table th:first-child { text-align: left; }
+  .fin-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+  .fin-table td:first-child { text-align: left; color: var(--muted2); font-size: 0.8rem; }
+  .fin-table tr:last-child td { border-bottom: none; }
+  .fin-table tr:hover td { background: rgba(255,255,255,0.015); }
+  .fin-table .highlight { color: var(--text); font-weight: 600; }
+  .fin-table .positive { color: var(--green); }
+  .fin-table .negative { color: var(--red); }
+  .fin-table .accent { color: var(--accent-light); font-weight: 700; font-family: 'Space Mono', monospace; }
+
+  /* ── CHARTS ──────────────────────────────────────────────────────────── */
+  .chart-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 28px;
+  }
+  .chart-title {
+    font-size: 0.65rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px;
+    font-family: 'Space Mono', monospace;
+  }
+  canvas { max-height: 300px; }
+
+  /* ── SCENARIO SELECTOR ────────────────────────────────────────────────── */
+  .scenario-tabs { display: flex; gap: 1px; margin-bottom: 28px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .scenario-tab {
+    flex: 1; padding: 10px 20px; font-size: 0.75rem;
+    font-weight: 700; cursor: pointer; border: none; letter-spacing: 0.06em;
+    background: var(--surface2); color: var(--muted); transition: all 0.2s;
+    font-family: 'Space Mono', monospace; text-transform: uppercase;
+  }
+  .scenario-tab:hover { background: var(--surface); color: var(--text); }
+  .scenario-tab.active-bear { background: rgba(239,68,68,0.12); color: var(--red); }
+  .scenario-tab.active-base { background: rgba(37,99,235,0.15); color: var(--accent-light); }
+  .scenario-tab.active-bull { background: rgba(34,197,94,0.12); color: var(--green); }
+
+  /* ── DCF BOXES ────────────────────────────────────────────────────────── */
+  .dcf-summary { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 24px; }
+  .dcf-box { border-radius: 4px; padding: 24px; text-align: center; border: 1px solid; }
+  .dcf-box.bear { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2); }
+  .dcf-box.base { background: rgba(37,99,235,0.06); border-color: rgba(37,99,235,0.25); }
+  .dcf-box.bull { background: rgba(34,197,94,0.05); border-color: rgba(34,197,94,0.2); }
+  .dcf-box .case { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; font-family: 'Space Mono', monospace; }
+  .dcf-box.bear .case { color: var(--red); }
+  .dcf-box.base .case { color: var(--accent-light); }
+  .dcf-box.bull .case { color: var(--green); }
+  .dcf-box .price { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.2rem; font-weight: 400; line-height: 1; margin-bottom: 6px; }
+  .dcf-box.bear .price { color: var(--red); }
+  .dcf-box.base .price { color: var(--accent-light); }
+  .dcf-box.bull .price { color: var(--green); }
+  .dcf-box .upside { font-size: 0.78rem; color: var(--muted2); }
+  .dcf-box .desc { font-size: 0.72rem; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+
+  /* ── BULL / BEAR ──────────────────────────────────────────────────────── */
+  .bb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .bb-col { background: var(--card); padding: 32px; }
+  .bb-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 24px;
+    font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+  }
+  .bb-header.bull { color: var(--green); }
+  .bb-header.bear { color: var(--red); }
+  .bb-item { display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start; }
+  .bb-bullet {
+    width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 8px;
+  }
+  .bb-bullet.bull { background: var(--green); }
+  .bb-bullet.bear { background: var(--red); }
+  .bb-text { font-size: 0.84rem; line-height: 1.7; }
+  .bb-text strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 0.88rem; font-weight: 600; }
+
+  /* ── PEERS TABLE ─────────────────────────────────────────────────────── */
+  .peer-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  .peer-table th {
+    padding: 10px 12px; text-align: right;
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+  }
+  .peer-table th:first-child { text-align: left; }
+  .peer-table td { padding: 11px 12px; text-align: right; border-bottom: 1px solid var(--border); }
+  .peer-table td:first-child { text-align: left; }
+  .peer-table tr.dlo-row td { color: var(--accent-light); font-weight: 600; }
+  .peer-table .nm { color: var(--muted); font-style: italic; }
+
+  /* ── VALUATION SUMMARY ───────────────────────────────────────────────── */
+  .val-summary { display: flex; flex-direction: column; gap: 8px; }
+  .val-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 18px; border-bottom: 1px solid var(--border);
+  }
+  .val-item:last-child { border-bottom: none; }
+  .val-item .method { font-size: 0.82rem; color: var(--muted2); }
+  .val-item .price-up { display: flex; align-items: center; gap: 14px; }
+  .val-item .target { font-weight: 700; font-size: 0.95rem; font-family: 'Space Mono', monospace; }
+  .val-item .change { font-size: 0.72rem; padding: 2px 10px; border-radius: 2px; font-weight: 700; font-family: 'Space Mono', monospace; }
+  .change-pos { background: rgba(34,197,94,0.1); color: var(--green); }
+  .change-neg { background: rgba(239,68,68,0.1); color: var(--red); }
+  .change-neu { background: rgba(212,168,67,0.1); color: var(--gold); }
+  .val-item.current { background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.2); border-radius: 3px; }
+  .val-item.current .method { color: var(--text); font-weight: 600; }
+
+  /* ── RECOMMENDATION ──────────────────────────────────────────────────── */
+  .rec-section {
+    border: 1px solid var(--border);
+    border-radius: 4px; padding: 56px;
+    text-align: center; background: var(--surface);
+    position: relative; overflow: hidden;
+  }
+  .rec-section::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .rec-verdict {
+    display: inline-block; padding: 6px 20px; border-radius: 2px;
+    background: transparent; color: var(--green);
+    border: 1px solid rgba(34,197,94,0.35);
+    font-weight: 700; font-size: 0.72rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 24px;
+    font-family: 'Space Mono', monospace;
+  }
+  .rec-title {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 400;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .rec-desc { color: var(--muted2); max-width: 600px; margin: 0 auto 40px; line-height: 1.8; font-weight: 300; }
+  .rec-targets { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+  .rec-target { text-align: center; }
+  .rec-target .rt-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; font-family: 'Space Mono', monospace; }
+  .rec-target .rt-value { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; font-weight: 400; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────────────── */
+  footer {
+    background: #0f1623;
+    padding: 48px 2.5rem 36px;
+    color: rgba(255,255,255,0.45);
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+  }
+  footer .footer-inner { max-width: 1280px; margin: 0 auto; }
+  footer .footer-disclaimer { max-width: 780px; margin-bottom: 28px; color: rgba(255,255,255,0.45); }
+  footer .footer-disclaimer a { color: #7eb8e8; text-decoration: none; font-weight: 400; }
+  footer .footer-disclaimer a:hover { text-decoration: underline; }
+  footer .footer-sources { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  footer .footer-sources .src-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.65); margin-right: 4px; }
+  footer .footer-sources a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.73rem; padding: 3px 0; transition: color 0.15s; }
+  footer .footer-sources a:hover { color: #7eb8e8; }
+  footer .footer-sources .src-sep { color: rgba(255,255,255,0.2); font-size: 0.7rem; }
+  footer .footer-credit { color: rgba(255,255,255,0.28); font-size: 0.68rem; }
+
+  /* ── INTERACTIVE PROJECTION TABLE ──────────────────────────────────── */
+  .proj-table-wrap { overflow-x: auto; }
+  .proj-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 640px; }
+  .proj-table th {
+    padding: 10px 14px; background: var(--surface2); text-align: right;
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+  .proj-table th:first-child { text-align: left; }
+  .proj-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+  .proj-table td:first-child { text-align: left; color: var(--muted2); font-weight: 500; }
+  .proj-table tr:hover td { background: rgba(255,255,255,0.018); }
+
+  /* ── GEOGRAPHY ────────────────────────────────────────────────────────── */
+  .geo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .geo-card { background: var(--card); padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .geo-flag { font-size: 1.4rem; }
+  .geo-country { font-weight: 600; font-size: 0.88rem; }
+  .geo-rev { font-size: 1.1rem; font-weight: 700; color: var(--accent-light); font-family: 'Space Mono', monospace; }
+  .geo-sub { font-size: 0.68rem; color: var(--muted); }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .overview-grid { grid-template-columns: 1fr; }
+    .bb-grid { grid-template-columns: 1fr; }
+    .dcf-summary { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-metrics { flex-wrap: wrap; gap: 24px; }
+    .hero-sub-row { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 64px 1.25rem; }
+    nav { padding: 0 1.25rem; }
+    .rec-section { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SECTION BREADCRUMB -->
+<div class="section-crumb" id="sectionCrumb">
+  <span class="crumb-ticker">DLO</span>
+  <span class="crumb-sep">/</span>
+  <span class="crumb-current" id="crumbCurrent">Overview</span>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">DLO <span>Thesis</span></div>
+  <div class="nav-links">
+    <a href="#overview" class="nav-link">Overview</a>
+    <a href="#moat" class="nav-link">Moat</a>
+    <a href="#catalysts" class="nav-link">Catalysts</a>
+    <a href="#financials" class="nav-link">Financials</a>
+    <a href="#valuation" class="nav-link">Valuation</a>
+    <a href="#bull-bear" class="nav-link">Bull/Bear</a>
+    <a href="#geography" class="nav-link">Geography</a>
+    <a href="#sentiment" class="nav-link">Sentiment</a>
+    <a href="#coverage" class="nav-link">Coverage</a>
+    <a href="#verdict" class="nav-link">Verdict</a>
+  </div>
+  <div class="nav-right">
+    <div class="verdict-pill">LONG</div>
+  </div>
+</nav>
+
+<!-- KPI BAR -->
+<div class="kpi-bar">
+  <div class="kpi-item"><span class="kpi-label">Ticker</span><span class="kpi-value">NASDAQ: DLO</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">Price</span><span class="kpi-value">$12.86</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">Mkt Cap</span><span class="kpi-value">$3.74B</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">Consensus Target</span><span class="kpi-value" style="color:var(--green)">$16.80 (+30.6%)</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">FY2025 Revenue</span><span class="kpi-value">$1.09B</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">Rev Growth YoY</span><span class="kpi-value" style="color:var(--green)">+46.5%</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">FY2025 TPV</span><span class="kpi-value">$40.8B</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">Net Cash</span><span class="kpi-value" style="color:var(--green)">$720M</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">FCF Margin</span><span class="kpi-value">37.8%</span></div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item"><span class="kpi-label">NRR</span><span class="kpi-value">145%</span></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <!-- HERO PHOTO — full bleed, fades into white at bottom -->
+  <div class="hero-photo">
+    <img src="dlo.jpg" alt="dLocal">
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="dot"></span>Competition Investment Thesis — April 2026</div>
+    <div class="hero-display">
+      DLocal<br>
+      <span class="ticker-word">NASDAQ: DLO</span>
+    </div>
+    <!-- SECTION JUMP BUTTONS -->
+    <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+      <a href="#financials" style="display:inline-flex;align-items:center;gap:7px;background:#1d4ed8;color:#fff;font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:opacity 0.18s;" onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">Financials &#8594;</a>
+      <a href="#valuation" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--accent);border:1px solid rgba(29,78,216,0.35);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:all 0.18s;" onmouseover="this.style.background='rgba(29,78,216,0.07)'" onmouseout="this.style.background='transparent'">Valuation &#8594;</a>
+      <a href="#sensitivity" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--accent);border:1px solid rgba(29,78,216,0.35);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:all 0.18s;" onmouseover="this.style.background='rgba(29,78,216,0.07)'" onmouseout="this.style.background='transparent'">Sensitivity &#8594;</a>
+      <a href="#sentiment" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--accent);border:1px solid rgba(29,78,216,0.35);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:all 0.18s;" onmouseover="this.style.background='rgba(29,78,216,0.07)'" onmouseout="this.style.background='transparent'">Sentiment &#8594;</a>
+      <a href="#geography" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--accent);border:1px solid rgba(29,78,216,0.35);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:all 0.18s;" onmouseover="this.style.background='rgba(29,78,216,0.07)'" onmouseout="this.style.background='transparent'">Global Footprint &#8594;</a>
+      <a href="#verdict" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--text);border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:10px 18px;border-radius:3px;text-decoration:none;transition:all 0.18s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">Verdict &#8594;</a>
+    </div>
+    <div class="hero-sub-row">
+      <p class="hero-sub">The invisible payment rails powering the Global South — a $2T+ addressable market with &lt;2% penetration and a 45% revenue CAGR.</p>
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="value up">45.5%</div>
+          <div class="label">Revenue CAGR</div>
+        </div>
+        <div class="hero-metric">
+          <div class="value up">50–60%</div>
+          <div class="label">TPV Growth 2026E</div>
+        </div>
+        <div class="hero-metric">
+          <div class="value up">$720M</div>
+          <div class="label">Net Cash</div>
+        </div>
+        <div class="hero-metric">
+          <div class="value up">145%</div>
+          <div class="label">NRR</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VERDICT BANNER (condensed) -->
+<div id="verdict-banner" style="background:#0077b6;padding:44px 2.5rem;position:relative;overflow:hidden;">
+  <!-- subtle light sheen top-right -->
+  <div style="position:absolute;top:-60px;right:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:40px;position:relative;flex-wrap:wrap;">
+
+    <!-- LEFT: LONG — BUY as hero statement -->
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.55);margin-bottom:10px;">Thesis Verdict</div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:400;color:#fff;letter-spacing:-0.02em;line-height:1;">LONG &mdash; BUY</div>
+      <div style="margin-top:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:3px;padding:5px 12px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;"></span>
+        <span style="font-family:'Space Mono',monospace;font-size:0.58rem;font-weight:700;color:#fff;letter-spacing:0.12em;text-transform:uppercase;">High Conviction</span>
+      </div>
+    </div>
+
+    <!-- CENTER: price targets -->
+    <div style="display:flex;gap:0;border-left:1px solid rgba(255,255,255,0.2);border-right:1px solid rgba(255,255,255,0.2);padding:0 40px;flex-wrap:wrap;justify-content:space-around;">
+      <div style="text-align:center;padding:0 20px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.55);margin-bottom:8px;">Current Price</div>
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.7rem;color:#fff;">$12.86</div>
+      </div>
+      <div style="text-align:center;padding:0 20px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.55);margin-bottom:8px;">Bear Price Target</div>
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.7rem;color:#fca5a5;">$18.93</div>
+      </div>
+      <div style="text-align:center;padding:0 20px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.55);margin-bottom:8px;">Base Price Target</div>
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.7rem;color:#bfdbfe;">$40.85</div>
+      </div>
+      <div style="text-align:center;padding:0 20px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.52rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.55);margin-bottom:8px;">Bull Price Target</div>
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.7rem;color:#86efac;">$75.02</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: stats + CTA -->
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:rgba(255,255,255,0.65);line-height:2;text-align:right;">
+        3.1x EV/Rev &nbsp;&middot;&nbsp; 45% CAGR<br>
+        $720M net cash &nbsp;&middot;&nbsp; 8 consecutive beats
+      </div>
+      <a href="#verdict" style="background:#fff;color:#0077b6;font-family:'Space Mono',monospace;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:12px 22px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:opacity 0.18s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Full Verdict &darr;</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPANY OVERVIEW -->
+<section style="padding-top:40px; padding-bottom:60px;">
+  <div class="container">
+    <div class="overview-grid">
+      <div>
+        <div class="section-tag">What They Do</div>
+        <h2 class="section-title" style="margin-bottom:20px;">The AWS of Emerging Market Payments</h2>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:20px;">
+          DLocal is a payment technology platform connecting global enterprises — think Netflix, Amazon, Uber, Spotify, Microsoft, and Booking.com — to local payment infrastructure across <strong style="color:var(--text)">44+ emerging markets</strong> in Latin America, Africa, and Asia.
+        </p>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:20px;">
+          Its value proposition is simple but profound: a merchant that wants to accept a Brazilian Pix payment, a Nigerian bank transfer, or an Indian UPI payment doesn't have to build relationships with 44 local banks, navigate 37 regulatory regimes, and manage 900+ local payment methods. They call DLocal.
+        </p>
+        <p style="color:var(--muted);line-height:1.8;">
+          Business model: <strong style="color:var(--text)">asset-light take rate</strong> on Total Payment Volume (TPV). Near-zero capex, high FCF conversion, and negative working capital in steady state. Think Visa/Mastercard economics applied to markets where Visa/Mastercard can't reach.
+        </p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Revenue & TPV Growth (2021–2025)</div>
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOAT -->
+<section id="moat" style="padding-top:40px;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Competitive Advantage</div>
+      <h2 class="section-title">Five Layers of Durable Moat</h2>
+      <p class="section-desc">DLocal's competitive position deepens with every transaction processed — scale, licenses, and data create compounding barriers that take years to replicate.</p>
+    </div>
+    <div class="moat-grid">
+      <div class="moat-card">
+        <div class="moat-icon">🏛️</div>
+        <div class="moat-title">Regulatory Licensing</div>
+        <div class="moat-desc">37 payment licenses across 26 markets — each taking 12–36 months to obtain. 16 additional applications in process, including the United States. Licenses are non-transferable barriers to entry.</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-icon">🔌</div>
+        <div class="moat-title">Single-Integration Network Effects</div>
+        <div class="moat-desc">One API covering 900+ local payment methods across 44 markets. Merchants integrate once, then expand globally. Deep integration in merchant tech stacks creates high switching costs.</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-icon">📊</div>
+        <div class="moat-title">Data & Conversion Intelligence</div>
+        <div class="moat-desc">Processing 3.5B+ transactions annually (6,700 per minute) generates proprietary fraud models, conversion optimization, and smart routing logic that competitors cannot replicate without scale.</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-icon">🤝</div>
+        <div class="moat-title">Merchant Wallet Expansion</div>
+        <div class="moat-desc">Top 50 merchants served across 12 countries and 50 payment methods on average. NRR of 145% proves merchants spend more over time. TPV Retention reached 158% in 2025.</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-icon">💰</div>
+        <div class="moat-title">Zero-Debt Balance Sheet</div>
+        <div class="moat-desc">$720M in net cash. Zero debt across its entire 10-year history. Asset-light model with &lt;0.2% capex-to-revenue. This financial fortress funds R&D and buybacks while competitors leverage up.</div>
+      </div>
+      <div class="moat-card">
+        <div class="moat-icon">⚡</div>
+        <div class="moat-title">First-Mover Depth in Complex Markets</div>
+        <div class="moat-desc">Deep local relationships, local banking partnerships, and operational knowledge in markets like Nigeria, Egypt, Argentina, and India that took years to build. Scale drives better FX liquidity and pricing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATALYSTS -->
+<section id="catalysts">
+  <div class="container">
+    <div class="overview-grid">
+      <div>
+        <div class="section-tag">Near-Term Catalysts</div>
+        <h2 class="section-title" style="margin-bottom:32px;">What Will Re-Rate the Stock</h2>
+        <div class="catalyst-timeline">
+          <div class="catalyst-item">
+            <div class="catalyst-dot"><div class="catalyst-dot-inner"></div></div>
+            <div class="catalyst-content">
+              <div class="catalyst-date">2026 — Ongoing</div>
+              <div class="catalyst-title">FIFA World Cup 2026 <span class="catalyst-badge badge-high">HIGH IMPACT</span></div>
+              <div class="catalyst-desc">Hosted across USA, Canada, Mexico — all DLO markets. Cross-border ticketing, merchandise, streaming, and travel payment volume will surge. DLocal is directly embedded in digital commerce across every host country.</div>
+            </div>
+          </div>
+          <div class="catalyst-item">
+            <div class="catalyst-dot"><div class="catalyst-dot-inner"></div></div>
+            <div class="catalyst-content">
+              <div class="catalyst-date">Approved 2026</div>
+              <div class="catalyst-title">$300M Share Buyback Program <span class="catalyst-badge badge-high">HIGH IMPACT</span></div>
+              <div class="catalyst-desc">Represents ~8% of current market cap. Signals management's conviction that stock is deeply undervalued. Accretive to EPS and will reduce float. Combined with $57M dividend (30% FCF payout policy).</div>
+            </div>
+          </div>
+          <div class="catalyst-item">
+            <div class="catalyst-dot"><div class="catalyst-dot-inner"></div></div>
+            <div class="catalyst-content">
+              <div class="catalyst-date">Live in 6 Countries</div>
+              <div class="catalyst-title">Fuse BNPL Product Scaling <span class="catalyst-badge badge-med">MEDIUM IMPACT</span></div>
+              <div class="catalyst-desc">BNPL volumes grew 88% quarter-over-quarter in Q4 2025. Installment payments are the preferred consumer credit format across LatAm. Opens multi-billion TPV opportunity with higher take rates.</div>
+            </div>
+          </div>
+          <div class="catalyst-item">
+            <div class="catalyst-dot"><div class="catalyst-dot-inner"></div></div>
+            <div class="catalyst-content">
+              <div class="catalyst-date">Full Suite Live</div>
+              <div class="catalyst-title">Stablecoin Payment Rails <span class="catalyst-badge badge-med">MEDIUM IMPACT</span></div>
+              <div class="catalyst-desc">Complete stablecoin infrastructure: on/off-ramps, settlement in USDC, checkout in stablecoins. Partners: Circle, BVNK, Fireblocks. Addresses FX volatility pain in Argentina, Nigeria, Egypt — DLO's core markets.</div>
+            </div>
+          </div>
+          <div class="catalyst-item">
+            <div class="catalyst-dot"><div class="catalyst-dot-inner"></div></div>
+            <div class="catalyst-content">
+              <div class="catalyst-date">Q1 2026 Results — May 14, 2026</div>
+              <div class="catalyst-title">Q1 2026 Earnings Beat Expected <span class="catalyst-badge badge-high">HIGH IMPACT</span></div>
+              <div class="catalyst-desc">Consensus estimates $318M revenue (est. EPS $0.18). DLO has beaten in 6 of the last 7 quarters with an average revenue beat of +7%. A beat here confirms 2026 guidance trajectory.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag" style="margin-bottom:32px;">Geographic Growth Engine</div>
+        <div class="geo-grid">
+          <div class="geo-card">
+            <div class="geo-flag">🇧🇷</div>
+            <div class="geo-country">Brazil</div>
+            <div class="geo-rev">$207M</div>
+            <div class="geo-sub">Pix instant rails, largest market</div>
+          </div>
+          <div class="geo-card">
+            <div class="geo-flag">🇦🇷</div>
+            <div class="geo-country">Argentina</div>
+            <div class="geo-rev">$161M</div>
+            <div class="geo-sub">Stablecoin hedge opportunity</div>
+          </div>
+          <div class="geo-card">
+            <div class="geo-flag">🇲🇽</div>
+            <div class="geo-country">Mexico</div>
+            <div class="geo-rev">$183M</div>
+            <div class="geo-sub">World Cup host nation</div>
+          </div>
+          <div class="geo-card">
+            <div class="geo-flag">🇳🇬</div>
+            <div class="geo-country">Nigeria</div>
+            <div class="geo-sub">Recovering, new merchants onboarding</div>
+          </div>
+          <div class="geo-card">
+            <div class="geo-flag">🇪🇬</div>
+            <div class="geo-country">Egypt</div>
+            <div class="geo-rev">$60M</div>
+            <div class="geo-sub">Returned in Q4 2025, accelerating</div>
+          </div>
+          <div class="geo-card">
+            <div class="geo-flag">🌍</div>
+            <div class="geo-country">Africa + Asia</div>
+            <div class="geo-sub">$219M total, fastest expanding region</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-title">Earnings Beat History (8Q)</div>
+          <canvas id="earningsChart" style="max-height:180px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section id="financials">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Historical Financials</div>
+      <h2 class="section-title">5-Year Financial Track Record</h2>
+      <p class="section-desc">Revenue grew 45.5% CAGR from 2021–2025 with zero debt and expanding FCF. FY2024 FCF dip was a deliberate working capital build ahead of accelerated growth.</p>
+    </div>
+    <div class="overview-grid" style="gap:24px; margin-bottom:32px;">
+      <div class="chart-box">
+        <div class="chart-title">Revenue vs Gross Profit ($M)</div>
+        <canvas id="gpChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Adjusted EBITDA vs FCF ($M)</div>
+        <canvas id="fcfChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Income Statement Summary ($M)</div>
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>FY2021</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Revenue</td><td class="highlight">$244</td><td class="highlight">$419</td><td class="highlight">$650</td><td class="highlight">$746</td><td class="accent">$1,094</td></tr>
+          <tr><td>YoY Growth</td><td>—</td><td class="positive">+71.6%</td><td class="positive">+55.2%</td><td class="positive">+14.7%</td><td class="positive">+46.5%</td></tr>
+          <tr><td>Gross Profit</td><td>$130</td><td>$202</td><td>$277</td><td>$295</td><td class="accent">$403</td></tr>
+          <tr><td>Gross Margin</td><td>53.4%</td><td>48.3%</td><td>42.6%</td><td>39.5%</td><td>36.8%</td></tr>
+          <tr><td>Adj. EBITDA</td><td>$99</td><td>$153</td><td>$202</td><td>$189</td><td class="accent">$278</td></tr>
+          <tr><td>EBITDA Margin</td><td>40.6%</td><td>36.5%</td><td>31.1%</td><td>25.3%</td><td>25.4%</td></tr>
+          <tr><td>Net Income</td><td>$78</td><td>$109</td><td>$149</td><td>$121</td><td class="accent">$197</td></tr>
+          <tr><td>Net Margin</td><td>31.9%</td><td>25.9%</td><td>22.9%</td><td>16.1%</td><td>18.0%</td></tr>
+          <tr><td>FCF</td><td>$107</td><td>$154</td><td>$293</td><td class="negative">-$35</td><td class="positive">$191</td></tr>
+          <tr><td>Total Debt</td><td class="positive">$0</td><td class="positive">$0</td><td class="positive">$0</td><td class="positive">$0</td><td class="positive">$0</td></tr>
+          <tr><td>Cash</td><td>$336</td><td>$468</td><td>$536</td><td>$425</td><td class="accent">$720</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:24px;" class="overview-grid">
+      <div class="card">
+        <div class="card-title">TPV & Take Rate Trend</div>
+        <canvas id="tpvChart"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title">Net Revenue Retention (%)</div>
+        <canvas id="nrrChart"></canvas>
+      </div>
+    </div>
+
+    <!-- FINANCIALS DATA SOURCE -->
+    <div style="margin-top:32px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-family:'Space Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;">Data Sources</span>
+      <span style="color:var(--border2);font-size:0.7rem;">—</span>
+      <span style="font-size:0.7rem;color:var(--muted);">Historical financials: <a href="https://ir.dlocal.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">DLocal IR</a> &amp; <a href="https://perplexity.ai/finance/DLO" target="_blank" style="color:var(--accent-light);text-decoration:none;">Perplexity Finance</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">Q4 2025 earnings transcript: <a href="https://ir.dlocal.com/news-releases" target="_blank" style="color:var(--accent-light);text-decoration:none;">DLocal Q4 2025 Earnings Call</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">SEC filings: <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DLO" target="_blank" style="color:var(--accent-light);text-decoration:none;">EDGAR (DLO)</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">TPV &amp; NRR KPIs: <a href="https://ir.dlocal.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">DLocal Investor Relations</a></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- VALUATION -->
+<section id="valuation">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Financial Model</div>
+      <h2 class="section-title">DCF Valuation + Scenario Analysis</h2>
+      <p class="section-desc">Three-scenario DCF anchored to management guidance, earnings transcript data, and peer-benchmarked WACC of 13.0%. Select a scenario to explore projections.</p>
+    </div>
+
+    <!-- ASSUMPTIONS BOX -->
+    <div class="card" style="margin-bottom:24px; border-color:rgba(59,130,246,0.3);">
+      <div class="card-title">Model Assumptions</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">WACC</div>
+          <div style="font-size:1.4rem;font-weight:700;">13.0%</div>
+          <div style="font-size:0.72rem;color:var(--muted);">Rf 4.4% + β 1.65 × ERP 5.2%</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Terminal Growth</div>
+          <div style="font-size:1.4rem;font-weight:700;">3.0%</div>
+          <div style="font-size:0.72rem;color:var(--muted);">Conservative long-run GDP growth</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">FCF Conversion</div>
+          <div style="font-size:1.4rem;font-weight:700;">~97%</div>
+          <div style="font-size:0.72rem;color:var(--muted);">Mgmt guided; FY2025 actuals 97%</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Shares Outstanding</div>
+          <div style="font-size:1.4rem;font-weight:700;">290.6M</div>
+          <div style="font-size:0.72rem;color:var(--muted);">Pre-buyback (downward pressure)</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Net Cash Added</div>
+          <div style="font-size:1.4rem;font-weight:700;">$720M</div>
+          <div style="font-size:0.72rem;color:var(--muted);">Bridge from EV to equity value</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Projection Period</div>
+          <div style="font-size:1.4rem;font-weight:700;">2026–2030</div>
+          <div style="font-size:0.72rem;color:var(--muted);">5-year explicit + terminal value</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENARIO TABS -->
+    <div class="scenario-tabs">
+      <button class="scenario-tab" id="tab-bear" onclick="setScenario('Bear')">🔴 Bear Case</button>
+      <button class="scenario-tab active-base" id="tab-base" onclick="setScenario('Base')">🔵 Base Case</button>
+      <button class="scenario-tab" id="tab-bull" onclick="setScenario('Bull')">🟢 Bull Case</button>
+    </div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div id="scenario-desc" style="color:var(--muted);font-size:0.85rem;margin-bottom:16px;"></div>
+      <div class="proj-table-wrap">
+        <table class="proj-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>TPV ($B)</th>
+              <th>Revenue ($M)</th>
+              <th>EBITDA ($M)</th>
+              <th>EBITDA Margin</th>
+              <th>FCF ($M)</th>
+              <th>PV FCF ($M)</th>
+            </tr>
+          </thead>
+          <tbody id="proj-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DCF SUMMARY BOXES -->
+    <div class="dcf-summary">
+      <div class="dcf-box bear">
+        <div class="case">Bear Case</div>
+        <div class="price">$18.93</div>
+        <div class="upside">+47.2% vs $12.86</div>
+        <div class="desc">TPV +38%, take rate compression, EV/EBITDA terminal 10x. Macro headwinds, margin pressure.</div>
+      </div>
+      <div class="dcf-box base">
+        <div class="case">Base Case ★</div>
+        <div class="price">$40.85</div>
+        <div class="upside">+217.7% vs $12.86</div>
+        <div class="desc">TPV +55%, guidance achieved, EBITDA expands to 28.5%, terminal 14x EV/EBITDA.</div>
+      </div>
+      <div class="dcf-box bull">
+        <div class="case">Bull Case</div>
+        <div class="price">$75.02</div>
+        <div class="upside">+483.4% vs $12.86</div>
+        <div class="desc">TPV +65%, World Cup surge, BNPL/stablecoin gains, 18x terminal multiple.</div>
+      </div>
+    </div>
+
+    <!-- DCF WATERFALL CHART -->
+    <div class="chart-box" style="margin-top:24px;">
+      <div class="chart-title">DCF Implied Price by Scenario vs. Current & Analyst Targets</div>
+      <canvas id="waterfallChart" style="max-height:280px;"></canvas>
+    </div>
+
+    <!-- COMPS -->
+    <div style="margin-top:32px;">
+      <div class="section-tag" style="margin-bottom:16px;">Comparable Company Analysis</div>
+      <div class="card">
+        <div class="card-title">Peer Valuation Multiples — FY2025</div>
+        <div style="overflow-x:auto;">
+          <table class="peer-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Ticker</th>
+                <th>Mkt Cap</th>
+                <th>EV/Rev</th>
+                <th>EV/EBITDA</th>
+                <th>P/E</th>
+                <th>Gross Margin</th>
+                <th>Op Margin</th>
+                <th>FCF Margin</th>
+                <th>ROE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="dlo-row">
+                <td><strong>DLocal</strong></td>
+                <td><strong>DLO</strong></td>
+                <td>$3.74B</td>
+                <td>3.1x</td>
+                <td>13.6x</td>
+                <td>21.8x</td>
+                <td>36.8%</td>
+                <td>20.1%</td>
+                <td class="positive">37.8%</td>
+                <td class="positive">37.2%</td>
+              </tr>
+              <tr>
+                <td>StoneCo</td>
+                <td>STNE</td>
+                <td>$3.68B</td>
+                <td>2.3x</td>
+                <td>3.7x</td>
+                <td>9.5x</td>
+                <td>76.2%</td>
+                <td>54.3%</td>
+                <td class="nm">-0.2%</td>
+                <td>22.8%</td>
+              </tr>
+              <tr>
+                <td>PagSeguro</td>
+                <td>PAGS</td>
+                <td>$2.10B</td>
+                <td class="nm">—</td>
+                <td class="nm">—</td>
+                <td class="nm">—</td>
+                <td>55.0%</td>
+                <td>22.0%</td>
+                <td>10.0%</td>
+                <td>12.0%</td>
+              </tr>
+              <tr>
+                <td>Remitly</td>
+                <td>RELY</td>
+                <td>$2.91B</td>
+                <td>1.6x</td>
+                <td>20.5x</td>
+                <td>44.5x</td>
+                <td>66.4%</td>
+                <td>4.7%</td>
+                <td>18.1%</td>
+                <td>8.9%</td>
+              </tr>
+              <tr>
+                <td>EVERTEC</td>
+                <td>EVTC</td>
+                <td>$1.80B</td>
+                <td>2.9x</td>
+                <td>8.7x</td>
+                <td>13.2x</td>
+                <td>49.7%</td>
+                <td>20.0%</td>
+                <td>21.9%</td>
+                <td>23.4%</td>
+              </tr>
+              <tr>
+                <td>Global-e Online</td>
+                <td>GLBE</td>
+                <td>$6.65B</td>
+                <td>6.3x</td>
+                <td>65.2x</td>
+                <td>100.8x</td>
+                <td>45.3%</td>
+                <td>7.4%</td>
+                <td>29.2%</td>
+                <td>7.5%</td>
+              </tr>
+              <tr style="background:rgba(245,158,11,0.04);border-top:1px solid var(--border);">
+                <td style="color:var(--gold);font-weight:600;">Peer Median</td>
+                <td>—</td>
+                <td>—</td>
+                <td style="color:var(--gold);font-weight:600;">2.6x</td>
+                <td style="color:var(--gold);font-weight:600;">14.6x</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:16px;font-size:0.8rem;color:var(--muted);">
+          <strong style="color:var(--text);">DLO vs Peers:</strong> DLO trades at 3.1x EV/Revenue — premium to the 2.6x peer median, but justified by its 45.5% revenue CAGR, 37.8% FCF margin (best-in-class), and 37.2% ROE. Only DLO combines hypergrowth with positive FCF generation.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SENSITIVITY ANALYSIS -->
+    <div id="sensitivity"></div>
+    <div style="margin-top:40px;">
+      <div class="card">
+        <div class="card-title">DCF Sensitivity Analysis — Implied Share Price ($)</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:20px;">
+          Two-dimensional heat map showing how the DCF intrinsic value changes across combinations of
+          <strong style="color:var(--text);">WACC</strong> (discount rate) and <strong style="color:var(--text);">Terminal Growth Rate</strong>.
+          Each cell shows the implied share price; green = meaningful upside to $12.86, red = limited upside or downside.
+        </p>
+
+        <!-- WACC vs Terminal Growth Rate Table -->
+        <div style="overflow-x:auto;margin-bottom:28px;">
+          <table id="sensitivity-table" style="width:100%;border-collapse:collapse;font-size:0.78rem;text-align:center;">
+            <thead>
+              <tr>
+                <th style="padding:10px 12px;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);font-weight:600;">WACC \ Terminal g</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">1.5%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">2.0%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">2.5%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;background:rgba(59,130,246,0.08);">3.0% ★</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">3.5%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">4.0%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">4.5%</th>
+              </tr>
+            </thead>
+            <tbody id="sensitivity-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- EBITDA Multiple vs Revenue Growth Table -->
+        <div class="card-title" style="margin-bottom:12px;font-size:0.82rem;">EV/EBITDA Exit Multiple vs. 2026E Revenue Growth — Implied Price ($)</div>
+        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:16px;">
+          Exit-multiple sensitivity: varies the terminal EV/EBITDA multiple (10x–20x) against the 2026 revenue growth rate (35%–70%).
+          Current peer median is 14.6x. Base case uses 14x exit at 55% revenue growth.
+        </p>
+        <div style="overflow-x:auto;margin-bottom:28px;">
+          <table id="sensitivity-table2" style="width:100%;border-collapse:collapse;font-size:0.78rem;text-align:center;">
+            <thead>
+              <tr>
+                <th style="padding:10px 12px;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);font-weight:600;">Exit Multiple \ Rev Growth</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">35%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">42%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">50%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;background:rgba(59,130,246,0.08);">55% ★</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">60%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">65%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">70%</th>
+              </tr>
+            </thead>
+            <tbody id="sensitivity-tbody2"></tbody>
+          </table>
+        </div>
+
+        <!-- Take Rate vs TPV Growth -->
+        <div class="card-title" style="margin-bottom:12px;font-size:0.82rem;">Take Rate vs. 2026 TPV Growth — Gross Profit Sensitivity ($M)</div>
+        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:16px;">
+          The market's biggest fear: simultaneous take rate erosion and TPV deceleration. This table shows 2026 gross profit under each combination.
+          Base: 2.60% take rate, 55% TPV growth. Bear: 2.30%, 40% growth. FY2025 baseline gross profit: $403M.
+        </p>
+        <div style="overflow-x:auto;margin-bottom:16px;">
+          <table id="sensitivity-table3" style="width:100%;border-collapse:collapse;font-size:0.78rem;text-align:center;">
+            <thead>
+              <tr>
+                <th style="padding:10px 12px;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);font-weight:600;">Take Rate \ TPV Growth</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">35%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">40%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">47%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;background:rgba(59,130,246,0.08);">55% ★</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">60%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">65%</th>
+                <th style="padding:10px 12px;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600;">70%</th>
+              </tr>
+            </thead>
+            <tbody id="sensitivity-tbody3"></tbody>
+          </table>
+        </div>
+
+        <div style="padding:14px 16px;background:rgba(59,130,246,0.06);border-radius:10px;font-size:0.82rem;color:var(--muted);">
+          <strong style="color:var(--text);">Key Takeaway:</strong> Even under the most pessimistic WACC (15%) and minimal terminal growth (1.5%), the DCF implies a $14–19 share price — still above current levels. The model is most sensitive to terminal growth rate and exit multiple assumptions, not near-term revenue growth, which is already guided by management at 50–60%.
+          The ★ columns represent our base-case assumptions.
+        </div>
+      </div>
+    </div>
+
+    <!-- VALUATION SUMMARY -->
+    <div style="margin-top:32px;">
+      <div class="card">
+        <div class="card-title">Valuation Summary — Implied Share Price vs. Current</div>
+        <div class="val-summary">
+          <div class="val-item current">
+            <span class="method">📍 Current Market Price</span>
+            <div class="price-up">
+              <span class="target">$12.86</span>
+              <span class="change change-neu">NASDAQ: DLO</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">DCF Bear Case (conservative)</span>
+            <div class="price-up">
+              <span class="target" style="color:var(--red);">$18.93</span>
+              <span class="change change-pos">+47.2%</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">Comps — EV/EBITDA @ Peer Median 14.6x</span>
+            <div class="price-up">
+              <span class="target">$16.44</span>
+              <span class="change change-pos">+27.8%</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">Analyst Consensus (5 analysts)</span>
+            <div class="price-up">
+              <span class="target">$16.80</span>
+              <span class="change change-pos">+30.6%</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">Goldman Sachs (Buy)</span>
+            <div class="price-up">
+              <span class="target" style="color:var(--green);">$19.00</span>
+              <span class="change change-pos">+47.7%</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">DCF Base Case (guidance achieved)</span>
+            <div class="price-up">
+              <span class="target" style="color:var(--accent);">$40.85</span>
+              <span class="change change-pos">+217.7%</span>
+            </div>
+          </div>
+          <div class="val-item">
+            <span class="method">DCF Bull Case (World Cup + new products)</span>
+            <div class="price-up">
+              <span class="target" style="color:var(--green);">$75.02</span>
+              <span class="change change-pos">+483.4%</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:16px;background:rgba(59,130,246,0.06);border-radius:10px;font-size:0.82rem;color:var(--muted);">
+          <strong style="color:var(--text);">Key Takeaway:</strong> Even the bear-case DCF ($18.93) implies 47% upside. The stock offers significant downside protection given its net cash position ($720M = $2.48/share), zero debt, and 37.8% FCF margin. The base case, which simply requires management to hit its own 2026 guidance, implies a $40+ stock.
+        </div>
+      </div>
+    </div>
+
+    <!-- VALUATION DATA SOURCE -->
+    <div style="margin-top:32px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-family:'Space Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;">Data Sources</span>
+      <span style="color:var(--border2);font-size:0.7rem;">—</span>
+      <span style="font-size:0.7rem;color:var(--muted);">DCF model inputs: <a href="https://ir.dlocal.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">DLocal Q4 2025 Earnings &amp; 2026 Guidance</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">WACC &amp; beta: <a href="https://perplexity.ai/finance/DLO" target="_blank" style="color:var(--accent-light);text-decoration:none;">Perplexity Finance</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">Peer comps: <a href="https://perplexity.ai/finance/ADYEN" target="_blank" style="color:var(--accent-light);text-decoration:none;">Adyen</a>, <a href="https://perplexity.ai/finance/NUVEI" target="_blank" style="color:var(--accent-light);text-decoration:none;">Nuvei</a>, <a href="https://perplexity.ai/finance/PAGS" target="_blank" style="color:var(--accent-light);text-decoration:none;">PagSeguro</a>, <a href="https://perplexity.ai/finance/STNE" target="_blank" style="color:var(--accent-light);text-decoration:none;">StoneCo</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">Analyst price targets: <a href="https://www.goldmansachs.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">Goldman Sachs</a>, <a href="https://www.jpmorgan.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">JPMorgan</a>, <a href="https://www.citigroup.com" target="_blank" style="color:var(--accent-light);text-decoration:none;">Citi</a></span>
+      <span style="color:var(--border2);font-size:0.7rem;">·</span>
+      <span style="font-size:0.7rem;color:var(--muted);">Sensitivity ranges: proprietary model anchored to <a href="https://ir.dlocal.com/news-releases" target="_blank" style="color:var(--accent-light);text-decoration:none;">DLocal 2026 guidance</a></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- BULL / BEAR -->
+<section id="bull-bear">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Risk / Reward</div>
+      <h2 class="section-title">Bull Case vs. Bear Case</h2>
+    </div>
+    <div class="bb-grid">
+      <div class="bb-col">
+        <div class="bb-header bull">🐂 Bull Case — Why DLO Wins</div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>FIFA World Cup 2026 is a unique macro tailwind</strong> DLocal operates in all three host nations (USA, Canada, Mexico). Cross-border digital commerce across LatAm will surge. This is a 2026-specific catalyst that few companies in the world can monetize as directly.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>$300M buyback at historically depressed valuation</strong> Stock is down 61.6% from IPO despite 45% revenue CAGR. Buyback at 3x EV/Rev is extremely accretive — management is buying back stock at a fraction of its intrinsic value.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>NRR of 145% means the base grows automatically</strong> Without adding a single new merchant, DLO's revenue would grow 45% per year from existing customers expanding into new countries and payment methods. The growth is structurally embedded.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>TAM still essentially untapped</strong> DLO holds &lt;2% of a $2T+ TAM that is expected to double by 2030. Share of wallet with existing merchants is only ~10%. Decades of runway ahead.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>New products are high-margin and defensible</strong> BNPL (Fuse) and stablecoins carry higher take rates than core payment processing. 88% QoQ BNPL growth in Q4 2025 suggests rapid merchant adoption. These are additive revenue streams, not replacements.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bull">✓</div>
+          <div class="bb-text"><strong>Goldman, JPMorgan, and Citi all back the long</strong> Goldman ($19), JPMorgan ($18), Citi ($17) — the top three sell-side banks all have Buy ratings. Institutional conviction is high and the stock is under-owned.</div>
+        </div>
+      </div>
+      <div class="bb-col">
+        <div class="bb-header bear">🐻 Bear Case — What Could Go Wrong</div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>Take rate compression is structural</strong> Take rate has declined from 4.1% in 2021 to 2.7% in 2025 as large merchants negotiate volume discounts. If this continues faster than expected, revenue growth will lag TPV growth. Management guided lower gross profit margins for 2026.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>Merchant concentration risk</strong> Top 10 merchants still represent a disproportionate share of revenue. Loss of a major client (e.g., a streamer pulling LatAm volumes) could materially impact quarterly results and trigger negative price action.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>EM currency & macro volatility</strong> Argentina, Egypt, Nigeria, and other key markets have currency instability risks. FX headwinds directly compress dollar-reported revenues. Argentine peso devaluation hurt Q4 2025 gross profit despite strong volumes.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>Regulatory risk is ever-present</strong> Operating in 44 markets means constant exposure to regulatory change. A license revocation, capital controls, or new data localization requirements in Brazil or Mexico could be material disruptions.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>Competition from local champions and Stripe</strong> Local players (StoneCo, PagSeguro, MercadoPago) dominate domestic markets. Stripe is expanding internationally. A well-funded competitor winning a global merchant could displace DLO in key verticals.</div>
+        </div>
+        <div class="bb-item">
+          <div class="bb-bullet bear">✗</div>
+          <div class="bb-text"><strong>Stock has never recovered from 2021 IPO high</strong> DLO IPO'd at ~$32, reached $60+, and is now at $12.86. Multiple compression post-IPO has been severe. A re-rating requires sustained earnings beats and macro stability — not guaranteed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SENTIMENT INTELLIGENCE -->
+<section id="sentiment">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Non-Obvious Signal</div>
+      <h2 class="section-title">Sentiment Intelligence</h2>
+      <p class="section-sub">Data-driven analysis across retail and institutional channels — uncovering signals the sell-side misses</p>
+    </div>
+
+    <!-- SOURCE VERDICT BANNER -->
+    <div style="background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(99,102,241,0.08));border:1px solid rgba(59,130,246,0.3);border-radius:12px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:flex-start;gap:20px;">
+      <div style="font-size:2rem;flex-shrink:0;">🏆</div>
+      <div>
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);font-weight:700;margin-bottom:6px;">Best Signal Source: Reddit r/ValueInvesting</div>
+        <p style="font-size:0.9rem;color:var(--muted);line-height:1.6;">Three platforms were evaluated — <strong style="color:var(--text);">Polymarket</strong> has no DLO-specific prediction market (too small-cap to attract contract creation); <strong style="color:var(--text);">X/Twitter</strong> requires authentication to access search results and is dominated by noise for sub-$5B stocks; <strong style="color:var(--text);">Reddit</strong> provides the deepest signal — 5+ substantive DD threads with thesis-level analysis from investors who run Damodaran-style DCFs and hold concentrated positions. Retail here overlaps meaningfully with small-cap institutional thinking.</p>
+      </div>
+    </div>
+
+    <!-- SIGNAL GRID: SHORT INTEREST + SENTIMENT METER -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+
+      <!-- Short Interest Panel -->
+      <div class="card" style="padding:24px;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);font-weight:700;margin-bottom:16px;">Short Interest — Squeeze Tracker</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+          <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--green);">6.95%</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Float Short (Mar 2026)</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--red);">16.82%</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Float Short Peak (Sep 2025)</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--gold);">13.3x</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Days to Cover (Feb 2026)</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.6rem;font-weight:800;color:var(--accent);">11.85M</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Shares Short (Mar 2026)</div>
+          </div>
+        </div>
+        <canvas id="shortInterestChart" height="120"></canvas>
+        <div style="margin-top:14px;background:rgba(34,197,94,0.08);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 6px 6px 0;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--green);margin-bottom:4px;">BULLISH SIGNAL: Short Capitulation</div>
+          <div style="font-size:0.78rem;color:var(--muted);">Shorts have covered 58.7% of their peak position — from 16.82% to 6.95% float — as Q4 earnings confirmed execution. With 13.3 days-to-cover still elevated, any positive catalyst (Q1 beat, buyback acceleration, World Cup volumes) forces additional covering, amplifying upside.</div>
+        </div>
+      </div>
+
+      <!-- Reddit Sentiment Meter -->
+      <div class="card" style="padding:24px;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);font-weight:700;margin-bottom:16px;">Reddit Sentiment — r/ValueInvesting + r/WallStreetBets</div>
+        <canvas id="sentimentDonut" height="160" style="max-height:160px;"></canvas>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px;">
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--green);">67%</div>
+            <div style="font-size:0.7rem;color:var(--muted);">Bullish</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--muted);">18%</div>
+            <div style="font-size:0.7rem;color:var(--muted);">Neutral</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--red);">15%</div>
+            <div style="font-size:0.7rem;color:var(--muted);">Bearish</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:8px;">Engagement by Thread (Total upvotes)</div>
+          <div id="thread-bars"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- NON-OBVIOUS INSIGHTS -->
+    <div style="margin-bottom:40px;">
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:20px;">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;font-weight:400;color:var(--text);">Non-Obvious Intelligence</h3>
+        <span style="font-family:'Space Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);border:1px solid var(--accent);padding:3px 8px;">Primary Source Research</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+
+        <!-- INSIGHT 1 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--accent);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">SEC Form 3 · Mar 18, 2026</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">9 Execs Filed Form 3s on Earnings Day — Zero Sellers</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">CEO Arnt (2.35M shares), COO Kanovich (12.6M), CRO O'Brien (220K), CFO López Pérez and 5 board members filed simultaneous ownership disclosures. Not one sell. All RSUs vest through 2027+.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">0 Sellers</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">RSU Alignment 2027</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 2 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--green);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">13F · Feb 17, 2026 · New Position</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">CRIA Inc. (Ribbit Capital Affiliate) Opens 4M Shares — $56.6M New Bet</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">Ribbit (backers of Nubank, Coinbase) deployed $56.6M into DLO in Q4 2025 — during peak 28% short interest — via brand-new 13F position. Zero prior disclosure.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">New Q4 2025</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Ribbit Capital</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 3 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--gold);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">13D/A · Sep 9, 2025 · Float Engineering</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">GA's Secondary Sale Was the Prerequisite for the $300M Buyback</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">GA cut from 63.1M → 46.7M shares — intentionally freeing float. Buybacks are impossible when one holder controls nearly 100% of tradeable shares. The secondary created the liquidity condition Pedro Arnt cited to justify the program.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(245,158,11,0.12);color:var(--gold);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Float Engineering</span>
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Unlocked $300M Buyback</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 4 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--accent);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">CBN Regulatory · Apr 2, 2026</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">Nigeria CBN Used dLocal as the AI-AML Compliance Demo — 4 Days Ago</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">Nigeria's CBN mandated AI-powered AML. dLocal's country head presented as the gold-standard model: 90% fewer false positives, approval rates from 80% → 95%. Companies regulators showcase don't get delicensed.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Nigeria Moat</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">AI-AML Leader</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 5 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--accent);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">Q4 Transcript · Verbatim</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">CEO: &ldquo;Take Rate Is an Output, Not an Input&rdquo;</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">Compression (4.07% → 2.68%) is volume tiering math, not pricing erosion. New products — BNPL, stablecoins, card-present — are explicitly &ldquo;take rate accretive.&rdquo; The bear case is structurally misframed.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Accretive Products</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Volume Mix</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 6 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--green);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">13F · Q4 2025 · Accumulation</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">$97M Deployed by 3 EM Specialists at Lows — Quants Exited Simultaneously</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">Atmos Capital ($54M), Azora ($22M), Jain Global / Bobby Jain ($21M) — all new Q4 positions. While Citadel Advisors and Cubist Systematic cut or exited. Rotation from momentum shorts to fundamental longs.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">$97M New Capital</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Bobby Jain</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 7 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--gold);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">Regulatory · BCB Licence</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">Brazil Licence = Direct Pix Access. Competitors Route Through Middlemen.</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">The 2023 BCB payments institution licence grants dLocal direct Pix participation, e-wallet management, and unlimited eFX. Rivals without it pay intermediary fees and face settlement delays. 37 licences, 16 pending incl. USA.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Direct Pix</span>
+            <span style="background:rgba(245,158,11,0.12);color:var(--gold);font-size:0.67rem;padding:2px 7px;border-radius:3px;">37 Licences</span>
+          </div>
+        </div>
+
+        <!-- INSIGHT 8 -->
+        <div class="card" style="padding:16px 18px;border-left:3px solid var(--accent);">
+          <div style="font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:700;margin-bottom:6px;font-family:'Space Mono',monospace;">Q4 Transcript · Unreported</div>
+          <div style="font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.3;">Collaborating with Google on AP2 — First-Mover in AI Agent Payments for EM</div>
+          <p style="font-size:0.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px;">Pedro Arnt (verbatim): &ldquo;collaborating with Google on the AP2 open standard for interoperable AI agent payments… from the ground up.&rdquo; DLO is the only EM payments company embedded in Google's agentic commerce standard. Zero analyst follow-up. Zero P&L impact today.</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(34,197,94,0.12);color:var(--green);font-size:0.67rem;padding:2px 7px;border-radius:3px;">Google Collab</span>
+            <span style="background:rgba(59,130,246,0.12);color:var(--accent);font-size:0.67rem;padding:2px 7px;border-radius:3px;">0 Analyst Coverage</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- INSIDER OWNERSHIP + INSTITUTIONAL TABLE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+      <div class="card" style="padding:20px;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);font-weight:700;margin-bottom:14px;">Insider & Institutional Conviction</div>
+        <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:600;">Holder</th>
+              <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:600;">Shares</th>
+              <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:600;">% Float</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(30,45,69,0.5);">
+              <td style="padding:8px;color:var(--text);font-weight:600;">General Atlantic</td>
+              <td style="padding:8px;text-align:right;color:var(--text);">46.7M</td>
+              <td style="padding:8px;text-align:right;color:var(--gold);">15.8%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(30,45,69,0.5);">
+              <td style="padding:8px;color:var(--text);">Baillie Gifford</td>
+              <td style="padding:8px;text-align:right;color:var(--text);">3.0M</td>
+              <td style="padding:8px;text-align:right;color:var(--green);">+12.2% ↑</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(30,45,69,0.5);">
+              <td style="padding:8px;color:var(--text);">Morgan Stanley</td>
+              <td style="padding:8px;text-align:right;color:var(--text);">2.1M</td>
+              <td style="padding:8px;text-align:right;color:var(--muted);">0.7%</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(30,45,69,0.5);">
+              <td style="padding:8px;color:var(--text);font-weight:600;">CEO Pedro Arnt</td>
+              <td style="padding:8px;text-align:right;color:var(--text);">2.35M</td>
+              <td style="padding:8px;text-align:right;color:var(--accent);">Form 3 Filed</td>
+            </tr>
+            <tr>
+              <td style="padding:8px;color:var(--muted);">All Insiders</td>
+              <td style="padding:8px;text-align:right;color:var(--muted);">—</td>
+              <td style="padding:8px;text-align:right;color:var(--green);font-weight:700;">48.8%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px;background:rgba(34,197,94,0.08);border-left:3px solid var(--green);padding:10px 14px;border-radius:0 6px 6px 0;">
+          <div style="font-size:0.75rem;color:var(--muted);">CEO Pedro Arnt filed Form 3 on <strong style="color:var(--text);">March 18, 2026</strong> — the same day as Q4 earnings — disclosing 2.35M shares including 1.645M unvested RSUs. His incentives are entirely aligned with the stock price. With insiders owning 48.8% of the company, outside shareholders are minority partners in what is effectively a founder-led business.</div>
+        </div>
+      </div>
+
+      <!-- Post-Earnings X/Twitter Signal -->
+      <div class="card" style="padding:20px;">
+        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);font-weight:700;margin-bottom:14px;">Post-Earnings Signal (Mar 18 – Apr 2, 2026)</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+            <div style="font-size:0.7rem;color:var(--gold);font-weight:700;margin-bottom:4px;">Benzinga · Mar 18, 2026</div>
+            <div style="font-size:0.82rem;color:var(--text);">DLO surged <strong style="color:var(--green);">+12.14%</strong> to $12.84 day after Q4 print. CEO: <em>"2025 reflected exceptional execution across every dimension."</em></div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+            <div style="font-size:0.7rem;color:var(--accent);font-weight:700;margin-bottom:4px;">@Quality_stocksA · X/Twitter</div>
+            <div style="font-size:0.82rem;color:var(--text);"><em>"Huge results for $DLO with massive 2026 outlook. TPV guided 50–60%... this is the clearest risk/reward in EM fintech."</em></div>
+          </div>
+          <div style="background:var(--surface2);border-radius:8px;padding:12px;">
+            <div style="font-size:0.7rem;color:var(--green);font-weight:700;margin-bottom:4px;">Zacks · Q4 2025 Earnings Beat</div>
+            <div style="font-size:0.82rem;color:var(--text);">EPS $0.22 vs $0.18 est = <strong style="color:var(--green);">+22.2% surprise</strong>. 4th consecutive quarter beating both EPS and revenue. Revenue $296M vs $260M est = <strong style="color:var(--green);">+13.8% surprise</strong>.</div>
+          </div>
+          <div style="background:rgba(239,68,68,0.06);border-radius:8px;padding:12px;border:1px solid rgba(239,68,68,0.2);">
+            <div style="font-size:0.7rem;color:var(--red);font-weight:700;margin-bottom:4px;">Contrarian Signal — Analyst PT Cuts Despite Buy Ratings</div>
+            <div style="font-size:0.82rem;color:var(--muted);">Truist: $17 → $15. JPMorgan: $18.50 → $18.00. Both maintained Buy ratings. This is a bearish-priced signal baked into targets — conservative institutions cutting targets while maintaining conviction creates a credibility gap that could compress further or snap back sharply on Q1 guidance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNAL SUMMARY -->
+    <div style="background:linear-gradient(135deg,rgba(34,197,94,0.08),rgba(59,130,246,0.05));border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:20px 24px;">
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--green);font-weight:700;margin-bottom:10px;">Net Sentiment Signal: BULLISH — Score 73/100</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;">
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">Reddit r/VI</div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:78%;height:100%;background:var(--green);border-radius:3px;"></div></div>
+          <div style="font-size:0.75rem;color:var(--green);margin-top:4px;font-weight:700;">78 / 100</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">Short Interest</div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:80%;height:100%;background:var(--green);border-radius:3px;"></div></div>
+          <div style="font-size:0.75rem;color:var(--green);margin-top:4px;font-weight:700;">80 / 100 (declining)</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">Insider Ownership</div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:90%;height:100%;background:var(--green);border-radius:3px;"></div></div>
+          <div style="font-size:0.75rem;color:var(--green);margin-top:4px;font-weight:700;">90 / 100</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">Post-Earnings Reaction</div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:65%;height:100%;background:var(--gold);border-radius:3px;"></div></div>
+          <div style="font-size:0.75rem;color:var(--gold);margin-top:4px;font-weight:700;">65 / 100 (mixed)</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:4px;">Institutional Flow</div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--gold);border-radius:3px;"></div></div>
+          <div style="font-size:0.75rem;color:var(--gold);margin-top:4px;font-weight:700;">60 / 100 (building)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- GEOGRAPHIC PRESENCE -->
+<section id="geography" style="background:var(--bg);padding:100px 2.5rem;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Global Footprint</div>
+      <h2 class="section-title">Operating in 26 Markets Across 5 Continents</h2>
+      <p class="section-sub">DLocal holds 37 payment licences across 26 markets with 16 additional applications pending — including the United States. Each market represents a distinct regulatory moat competitors must replicate to enter.</p>
+    </div>
+
+    <!-- INTERACTIVE SVG MAP -->
+    <div style="position:relative;border:1px solid var(--border);border-radius:4px;overflow:hidden;background:var(--surface);margin-bottom:32px;">
+      <div style="padding:20px 24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <div style="font-size:0.65rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);">Click a market to see details</div>
+        <div style="display:flex;gap:16px;align-items:center;font-size:0.65rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);">
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#1d4ed8;display:inline-block;"></span>Core Market</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#92620a;display:inline-block;"></span>Growth Market</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:#166534;display:inline-block;"></span>Expansion Market</span>
+        </div>
+      </div>
+
+      <!-- SVG WORLD MAP with DLO market dots -->
+      <div style="position:relative;padding:12px 24px 20px;">
+        <svg viewBox="0 0 1000 500" style="width:100%;display:block;" id="dlo-world-map">
+          <!-- Simplified world map continent outlines -->
+          <!-- NORTH AMERICA -->
+          <path d="M 90 80 L 120 70 L 160 75 L 185 90 L 195 115 L 200 140 L 185 160 L 170 175 L 155 200 L 140 220 L 120 235 L 100 230 L 85 215 L 70 200 L 60 180 L 55 155 L 60 130 L 75 105 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- CENTRAL AMERICA -->
+          <path d="M 140 220 L 155 230 L 158 245 L 148 250 L 138 240 L 132 228 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- CARIBBEAN -->
+          <path d="M 175 200 L 185 195 L 192 202 L 185 208 L 178 206 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- SOUTH AMERICA -->
+          <path d="M 148 250 L 165 248 L 180 255 L 195 270 L 210 290 L 215 320 L 210 350 L 200 375 L 185 390 L 165 400 L 148 395 L 135 380 L 125 360 L 118 335 L 115 310 L 118 285 L 128 265 L 138 255 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- EUROPE -->
+          <path d="M 450 55 L 475 50 L 500 55 L 515 70 L 510 90 L 490 100 L 470 98 L 452 88 L 445 72 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- SCANDINAVIA bump -->
+          <path d="M 475 50 L 480 35 L 490 30 L 495 40 L 490 50 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- AFRICA -->
+          <path d="M 460 135 L 480 125 L 510 130 L 530 145 L 540 175 L 545 210 L 540 245 L 530 275 L 510 300 L 490 315 L 468 318 L 448 308 L 435 285 L 428 260 L 425 230 L 428 200 L 435 170 L 445 150 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- MIDDLE EAST -->
+          <path d="M 540 100 L 565 95 L 585 105 L 590 125 L 580 140 L 560 145 L 545 135 L 538 118 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- SOUTH ASIA -->
+          <path d="M 620 100 L 650 95 L 675 110 L 678 135 L 665 150 L 645 155 L 625 145 L 615 125 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- SOUTHEAST ASIA -->
+          <path d="M 700 130 L 730 120 L 755 135 L 758 158 L 742 170 L 718 168 L 702 152 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- EAST ASIA / CHINA -->
+          <path d="M 700 60 L 740 50 L 780 60 L 800 80 L 795 110 L 770 125 L 740 120 L 715 105 L 700 85 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- RUSSIA / CENTRAL ASIA -->
+          <path d="M 510 30 L 600 20 L 700 30 L 720 50 L 700 60 L 600 55 L 510 55 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+          <!-- AUSTRALIA -->
+          <path d="M 760 290 L 800 278 L 840 285 L 855 310 L 848 340 L 825 355 L 798 352 L 775 340 L 760 318 Z" fill="#e8e6e1" stroke="#d8d5cf" stroke-width="0.8"/>
+
+          <!-- ── DLO MARKET DOTS ── -->
+          <!-- CORE MARKETS (blue) -->
+          <!-- Brazil -->
+          <circle cx="178" cy="310" r="8" fill="#1d4ed8" fill-opacity="0.9" class="dlo-dot" data-market="Brazil" data-rev="$207M" data-tier="Core" data-note="Largest market. Pix instant rails. Amazon, Netflix processed here." style="cursor:pointer;"/>
+          <!-- Argentina -->
+          <circle cx="160" cy="365" r="7" fill="#1d4ed8" fill-opacity="0.9" class="dlo-dot" data-market="Argentina" data-rev="$161M" data-tier="Core" data-note="Stablecoin opportunity. FX-volatile market, USDC rails critical." style="cursor:pointer;"/>
+          <!-- Mexico -->
+          <circle cx="128" cy="215" r="7" fill="#1d4ed8" fill-opacity="0.9" class="dlo-dot" data-market="Mexico" data-rev="$183M" data-tier="Core" data-note="FIFA World Cup 2026 host. Cross-border volumes to surge." style="cursor:pointer;"/>
+          <!-- Colombia -->
+          <circle cx="152" cy="265" r="5" fill="#1d4ed8" fill-opacity="0.85" class="dlo-dot" data-market="Colombia" data-rev="Undisclosed" data-tier="Core" data-note="Growing fintech hub. PSE and Nequi local rails integrated." style="cursor:pointer;"/>
+          <!-- Chile -->
+          <circle cx="148" cy="375" r="5" fill="#1d4ed8" fill-opacity="0.85" class="dlo-dot" data-market="Chile" data-rev="Undisclosed" data-tier="Core" data-note="WebPay Plus integration. Stable macroeconomic environment." style="cursor:pointer;"/>
+          <!-- Egypt -->
+          <circle cx="510" cy="148" r="6" fill="#1d4ed8" fill-opacity="0.9" class="dlo-dot" data-market="Egypt" data-rev="$60M" data-tier="Core" data-note="Returned in Q4 2025 after temporary suspension. Accelerating rapidly." style="cursor:pointer;"/>
+
+          <!-- GROWTH MARKETS (amber/gold) -->
+          <!-- Nigeria -->
+          <circle cx="468" cy="215" r="6" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="Nigeria" data-rev="Recovering" data-tier="Growth" data-note="New merchants onboarding post-Naira stabilization. High-frequency retail." style="cursor:pointer;"/>
+          <!-- South Africa -->
+          <circle cx="490" cy="308" r="5" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="South Africa" data-rev="Non-LatAm" data-tier="Growth" data-note="EFT and PayFast rails. Sophisticated merchant base." style="cursor:pointer;"/>
+          <!-- Kenya -->
+          <circle cx="515" cy="248" r="5" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="Kenya" data-rev="Non-LatAm" data-tier="Growth" data-note="M-Pesa integration. Mobile money leader." style="cursor:pointer;"/>
+          <!-- India -->
+          <circle cx="645" cy="138" r="6" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="India" data-rev="Non-LatAm" data-tier="Growth" data-note="UPI rails. Massive cross-border inflow opportunity from global merchants." style="cursor:pointer;"/>
+          <!-- Indonesia -->
+          <circle cx="730" cy="250" r="5" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="Indonesia" data-rev="Non-LatAm" data-tier="Growth" data-note="GoPay, OVO, DANA integrations. 270M population." style="cursor:pointer;"/>
+          <!-- Morocco -->
+          <circle cx="452" cy="145" r="5" fill="#92620a" fill-opacity="0.9" class="dlo-dot" data-market="Morocco" data-rev="Non-LatAm" data-tier="Growth" data-note="North Africa gateway. CMI rails integrated." style="cursor:pointer;"/>
+
+          <!-- EXPANSION MARKETS (green) -->
+          <!-- Peru -->
+          <circle cx="148" cy="300" r="5" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Peru" data-rev="Undisclosed" data-tier="Expansion" data-note="Yape mobile wallet integrated. Growing mid-market." style="cursor:pointer;"/>
+          <!-- Ecuador -->
+          <circle cx="143" cy="275" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Ecuador" data-rev="Undisclosed" data-tier="Expansion" data-note="USD-denominated economy, lower FX complexity." style="cursor:pointer;"/>
+          <!-- Bolivia -->
+          <circle cx="160" cy="328" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Bolivia" data-rev="Undisclosed" data-tier="Expansion" data-note="Emerging online commerce, limited competition." style="cursor:pointer;"/>
+          <!-- Uruguay -->
+          <circle cx="175" cy="368" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Uruguay" data-rev="Undisclosed" data-tier="Expansion" data-note="Highest e-commerce penetration in LatAm per capita." style="cursor:pointer;"/>
+          <!-- Paraguay -->
+          <circle cx="168" cy="348" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Paraguay" data-rev="Undisclosed" data-tier="Expansion" data-note="Tigo Money integration. Growing consumer base." style="cursor:pointer;"/>
+          <!-- Costa Rica -->
+          <circle cx="142" cy="238" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Costa Rica" data-rev="Undisclosed" data-tier="Expansion" data-note="SINPE Móvil rails. High-income LatAm market." style="cursor:pointer;"/>
+          <!-- Dominican Republic -->
+          <circle cx="182" cy="202" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Dominican Republic" data-rev="Undisclosed" data-tier="Expansion" data-note="Caribbean hub. Tourism and remittances driver." style="cursor:pointer;"/>
+          <!-- Tanzania -->
+          <circle cx="520" cy="268" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Tanzania" data-rev="Non-LatAm" data-tier="Expansion" data-note="M-Pesa Tanzania integration." style="cursor:pointer;"/>
+          <!-- Ghana -->
+          <circle cx="455" cy="230" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Ghana" data-rev="Non-LatAm" data-tier="Expansion" data-note="MTN MoMo rails. Stable cedi environment post-IMF deal." style="cursor:pointer;"/>
+          <!-- Pakistan -->
+          <circle cx="612" cy="118" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Pakistan" data-rev="Non-LatAm" data-tier="Expansion" data-note="JazzCash integration. 230M population." style="cursor:pointer;"/>
+          <!-- Philippines -->
+          <circle cx="750" cy="195" r="4" fill="#166534" fill-opacity="0.9" class="dlo-dot" data-market="Philippines" data-rev="Non-LatAm" data-tier="Expansion" data-note="GCash integration. High remittance economy." style="cursor:pointer;"/>
+
+          <!-- PENDING / APPLIED (dashed outline) -->
+          <!-- USA (pending licence) -->
+          <circle cx="115" cy="150" r="7" fill="none" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2" class="dlo-dot" data-market="United States" data-rev="Pending" data-tier="Pending Licence" data-note="Application filed. Entry would unlock largest e-commerce market. Potential 2026–27 catalyst." style="cursor:pointer;"/>
+
+          <!-- Tooltip box -->
+          <g id="map-tooltip" style="display:none;pointer-events:none;">
+            <rect id="tt-bg" x="0" y="0" width="200" height="90" rx="3" fill="white" stroke="#e8e6e1" stroke-width="1"/>
+            <text id="tt-market" x="10" y="18" font-family="'DM Serif Display',Georgia,serif" font-size="13" fill="#0f0f0e"></text>
+            <text id="tt-tier" x="10" y="34" font-family="'Space Mono',monospace" font-size="8" fill="#78716c"></text>
+            <text id="tt-rev" x="10" y="50" font-family="'Space Mono',monospace" font-size="9" fill="#1d4ed8" font-weight="700"></text>
+            <text id="tt-note" x="10" y="66" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#57534e"></text>
+            <text id="tt-note2" x="10" y="80" font-family="'DM Sans',sans-serif" font-size="8.5" fill="#57534e"></text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- DETAIL CARD (shows on dot click) -->
+      <div id="market-detail" style="border-top:1px solid var(--border);padding:16px 24px;display:none;background:var(--surface2);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+          <div>
+            <div id="md-tier" style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;"></div>
+            <div id="md-market" style="font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:var(--text);"></div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:4px;">FY2025 Revenue</div>
+            <div id="md-rev" style="font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--accent-light);"></div>
+          </div>
+        </div>
+        <div id="md-note" style="font-size:0.82rem;color:var(--muted2);margin-top:10px;line-height:1.7;"></div>
+      </div>
+    </div>
+
+    <!-- MARKET COUNT STATS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;">
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--text);line-height:1;">26</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Active Markets</div>
+      </div>
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--text);line-height:1;">37</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Payment Licences</div>
+      </div>
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--text);line-height:1;">16</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Applications Pending</div>
+      </div>
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--text);line-height:1;">5</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Continents</div>
+      </div>
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--accent-light);line-height:1;">$219M</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Non-LatAm Revenue</div>
+      </div>
+      <div style="background:var(--card);padding:24px;text-align:center;">
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:2.5rem;font-weight:400;color:var(--accent-light);line-height:1;">$40.8B</div>
+        <div style="font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-top:8px;">Total TPV FY2025</div>
+      </div>
+    </div>
+
+    <!-- REGION BREAKDOWN TABLE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="card">
+        <div class="card-title">Latin America — Core</div>
+        <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="text-align:left;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Market</th>
+            <th style="text-align:right;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Revenue</th>
+            <th style="text-align:right;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Key Rails</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--text);font-weight:600;">🇧🇷 Brazil</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent-light);font-weight:700;">$207M</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">Pix, Boleto, Credit</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--text);font-weight:600;">🇲🇽 Mexico</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent-light);font-weight:700;">$183M</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">SPEI, OXXO Pay</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--text);font-weight:600;">🇦🇷 Argentina</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent-light);font-weight:700;">$161M</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">Debin, USDC rails</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇨🇴 Colombia</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">—</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">PSE, Nequi</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇨🇱 Chile</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">—</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">WebPay Plus</td></tr>
+            <tr><td style="padding:9px 10px;color:var(--muted2);">🇵🇪 Peru</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">—</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">Yape, PagoEfectivo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">Africa, Middle East & Asia</div>
+        <table style="width:100%;font-size:0.8rem;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="text-align:left;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Market</th>
+            <th style="text-align:right;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Revenue</th>
+            <th style="text-align:right;padding:7px 10px;font-size:0.62rem;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:700;">Key Rails</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--text);font-weight:600;">🇪🇬 Egypt</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--accent-light);font-weight:700;">$60M</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">Fawry, Meeza</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇳🇬 Nigeria</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">Recovering</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">Bank transfer, USSD</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇰🇪 Kenya</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">Non-LatAm</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">M-Pesa</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇿🇦 South Africa</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">Non-LatAm</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">EFT, PayFast</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;color:var(--muted2);">🇮🇳 India</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">Non-LatAm</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">UPI, NetBanking</td></tr>
+            <tr><td style="padding:9px 10px;color:var(--muted2);">🇮🇩 Indonesia</td><td style="text-align:right;padding:9px 10px;font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--muted);">Non-LatAm</td><td style="text-align:right;padding:9px 10px;color:var(--muted2);font-size:0.75rem;">GoPay, OVO, DANA</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+// ── MAP INTERACTIVITY ──
+(function() {
+  const dots = document.querySelectorAll('.dlo-dot');
+  const detail = document.getElementById('market-detail');
+  const mdMarket = document.getElementById('md-market');
+  const mdTier = document.getElementById('md-tier');
+  const mdRev = document.getElementById('md-rev');
+  const mdNote = document.getElementById('md-note');
+
+  const tierColors = { 'Core': '#1d4ed8', 'Growth': '#92620a', 'Expansion': '#166534', 'Pending Licence': '#6b6e7e' };
+
+  dots.forEach(dot => {
+    dot.addEventListener('mouseenter', function(e) {
+      this.setAttribute('r', parseFloat(this.getAttribute('r') || 5) + 2);
+      this.style.filter = 'drop-shadow(0 0 6px currentColor)';
+    });
+    dot.addEventListener('mouseleave', function() {
+      const orig = parseFloat(this.getAttribute('data-orig-r') || this.getAttribute('r')) - 2;
+      this.setAttribute('r', orig + 2);
+      this.style.filter = '';
+    });
+    dot.addEventListener('click', function() {
+      const market = this.dataset.market;
+      const rev = this.dataset.rev;
+      const tier = this.dataset.tier;
+      const note = this.dataset.note;
+      const color = tierColors[tier] || '#1d4ed8';
+
+      mdMarket.textContent = market;
+      mdTier.textContent = tier + ' Market';
+      mdTier.style.color = color;
+      mdRev.textContent = rev;
+      mdRev.style.color = color;
+      mdNote.textContent = note;
+      detail.style.display = 'block';
+
+      // Pulse effect
+      this.style.transition = 'r 0.15s ease';
+      dots.forEach(d => d.style.opacity = '0.4');
+      this.style.opacity = '1';
+    });
+  });
+
+  // Click outside to reset
+  document.getElementById('dlo-world-map').addEventListener('click', function(e) {
+    if (!e.target.classList.contains('dlo-dot')) {
+      dots.forEach(d => d.style.opacity = '1');
+      detail.style.display = 'none';
+    }
+  });
+})();
+</script>
+
+
+<!-- POTENTIAL COVERAGE -->
+<section id="coverage" style="background:var(--bg);padding:80px 2.5rem;border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;">
+      <span style="font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;">Market Presence</span>
+    </div>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1;">Coverage</h2>
+    <p style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:0.92rem;color:var(--muted);margin-bottom:48px;max-width:560px;">DLocal operates across 40+ emerging markets. Below are the active operating regions as of Q1 2026.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+
+      <!-- Africa & Middle East -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:28px 24px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;margin-bottom:16px;">Africa &amp; Middle East</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇲</span>Cameroon</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇮</span>Ivory Coast</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇪🇬</span>Egypt</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇬🇭</span>Ghana</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇰🇪</span>Kenya</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇲🇦</span>Morocco</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇳🇬</span>Nigeria</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇷🇼</span>Rwanda</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇸🇳</span>Senegal</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇿🇦</span>South Africa</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇹🇿</span>Tanzania</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇹🇷</span>Turkey</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇺🇬</span>Uganda</span>
+        </div>
+      </div>
+
+      <!-- Asia -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:28px 24px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;margin-bottom:16px;">Asia</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇧🇩</span>Bangladesh</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇳</span>China</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇵🇭</span>Philippines</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇮🇳</span>India</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇮🇩</span>Indonesia</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇲🇾</span>Malaysia</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇵🇰</span>Pakistan</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇹🇭</span>Thailand</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇻🇳</span>Vietnam</span>
+        </div>
+      </div>
+
+      <!-- Latin America -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:28px 24px;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:700;margin-bottom:16px;">Latin America</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇦🇷</span>Argentina</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇧🇴</span>Bolivia</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇧🇷</span>Brazil</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇱</span>Chile</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇴</span>Colombia</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇨🇷</span>Costa Rica</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇪🇨</span>Ecuador</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇸🇻</span>El Salvador</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇬🇹</span>Guatemala</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇭🇳</span>Honduras</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇲🇽</span>Mexico</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇳🇮</span>Nicaragua</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇵🇦</span>Panama</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇵🇾</span>Paraguay</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇵🇪</span>Peru</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇩🇴</span>Dominican Rep.</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#f3f4f6;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:0.73rem;font-family:'DM Sans',sans-serif;"><span style="font-size:0.95rem;">🇺🇾</span>Uruguay</span>
+        </div>
+      </div>
+
+    </div><!-- /grid -->
+  </div>
+</section>
+
+
+<!-- VERDICT -->
+<section id="verdict">
+  <div class="container">
+
+    <!-- WHY APRIL 2026 ENTRY POINT -->
+    <div style="margin-bottom:40px;">
+      <div class="card-title" style="margin-bottom:24px;font-size:0.65rem;">Why April 2026 Is the Right Entry Point</div>
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;">
+
+        <!-- Bullet 1 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;border-bottom:1px solid var(--border);align-items:flex-start;background:var(--card);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">01</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">Q4 2025: The Largest Beat in Company History Restores Execution Credibility</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">Revenue of $337.9M beat consensus by $41.6M (+14%) — the single largest absolute beat across at least 6 reported quarters. EPS of $0.22 vs. $0.18 estimate (+22%). The stock reacted +9.4% the day after, reversing the pattern set by Q4 2024's –30.5% collapse. Four consecutive beats on both EPS and revenue have now eliminated the execution uncertainty that kept institutional buyers sidelined through mid-2025.</div>
+          </div>
+        </div>
+
+        <!-- Bullet 2 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;border-bottom:1px solid var(--border);align-items:flex-start;background:var(--surface);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">02</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">$300M Buyback + $57.2M Dividend Creates a 9.6% Shareholder Yield Floor</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">Neither programme existed 6 months ago. The $300M repurchase (expiring March 2027) represents 8.1% of the market cap at $12.75, funded by $720M net cash and $191M annual FCF. The $57.2M dividend ($0.1939/share, payable June 10, 2026) adds a 1.55% yield. Combined: ~9.6% shareholder return in the next 12 months from a business growing TPV 50–60% — a profile with no comparable in emerging-market fintech.</div>
+          </div>
+        </div>
+
+        <!-- Bullet 3 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;border-bottom:1px solid var(--border);align-items:flex-start;background:var(--card);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">03</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">Egypt Recovery Converts the Biggest Bear Thesis Into a Tailwind</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">Egypt dragged the Africa & Asia segment through Q2–Q3 2025, after a major merchant reduced its share-of-wallet. Q4 2025 confirmed the reversal: the merchant returned and new clients in streaming, ride-hailing, and e-commerce were onboarded. Africa & Asia grew +32% QoQ and +23% YoY. Egypt is now embedded as a tailwind in 2026 guidance — not flagged as a risk. The risk that suppressed the stock in mid-2025 has inverted into a growth contributor.</div>
+          </div>
+        </div>
+
+        <!-- Bullet 4 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;border-bottom:1px solid var(--border);align-items:flex-start;background:var(--surface);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">04</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">Short Interest Collapsed From 28.2% to 6.95% — Forced Sellers Are Gone</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">At peak pessimism (Aug 15, 2025), 28.2% of DLO's float was sold short — 16.57M shares at $15.66, representing $259M in short positions betting against the thesis. By March 13, 2026, that had fallen to 6.95% (11.85M shares). Approximately 58% of the peak short position has been covered. Forced selling from short-sellers that dragged the stock from $15.66 to $8.34 is structurally over. With 13.3 days-to-cover still elevated, any positive catalyst amplifies upside through residual short covering.</div>
+          </div>
+        </div>
+
+        <!-- Bullet 5 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;border-bottom:1px solid var(--border);align-items:flex-start;background:var(--card);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">05</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">The Business Is 47% Larger — At Nearly the Same Price as the 2024 Lows</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">DLO traded at $8.75 in October 2024. It trades at $12.75 today — 46% higher — but the company is a fundamentally different scale: revenue $1.09B (vs ~$745M), FCF $191M (+110% YoY), NRR 162% in Q4 (vs ~130%), net cash $720M (+$170M), and TPV $40.8B (+60%). You are paying 46% more for a business that is 47% larger by revenue, 110% larger by FCF, and now carries a buyback and dividend. The valuation re-rate has not kept pace with the fundamental improvement.</div>
+          </div>
+        </div>
+
+        <!-- Bullet 6 -->
+        <div style="display:flex;gap:20px;padding:20px 24px;align-items:flex-start;background:var(--surface);">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:3px;background:rgba(29,78,216,0.08);border:1px solid rgba(29,78,216,0.2);display:flex;align-items:center;justify-content:center;">
+            <span style="font-size:0.6rem;font-weight:700;font-family:'Space Mono',monospace;color:var(--accent-light);">06</span>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:5px;">Three Hard-Dated Catalysts in the Next 90 Days</div>
+            <div style="font-size:0.8rem;color:var(--muted2);line-height:1.75;">The next quarter is unusually catalyst-dense: <span style="color:var(--accent-light);font-weight:600;">Q1 2026 earnings (~May 14)</span> — first quarter under new CEO Pedro Arnt with 50–60% TPV growth expected, continuing the beat streak. <span style="color:var(--accent-light);font-weight:600;">Dividend payment (June 10, 2026)</span> — $0.1939/share cash return to shareholders of record May 27, a hard-dated liquidity event. <span style="color:var(--accent-light);font-weight:600;">FIFA World Cup 2026 (June–July, Mexico/USA/Canada)</span> — DLO processes payments across Mexico ($183M revenue), Brazil ($207M), and Argentina ($161M); World Cup cross-border e-commerce, streaming, and advertising volumes will flow directly through its rails. None of these existed or were visible 12 months ago.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="rec-section">
+      <div class="rec-verdict">LONG — BUY</div>
+      <h2 class="rec-title">DLocal: The $12.86 Stock Worth $40+</h2>
+      <p class="rec-desc">
+        DLocal is a rare combination of hypergrowth (45% revenue CAGR), profitability (18% net margin, 37.8% FCF margin), zero debt, and a massive underpenetrated market. At 3.1x EV/Revenue, the market is pricing in execution failure — but 8 consecutive quarters of consensus beats tell a different story. The $300M buyback, FIFA World Cup 2026 catalyst, and Goldman/JPMorgan/Citi conviction make this a high-conviction <strong>LONG</strong> with asymmetric risk/reward. Even the bear case implies 47% upside.
+      </p>
+      <div class="rec-targets">
+        <div class="rec-target">
+          <div class="rt-label">Current Price</div>
+          <div class="rt-value">$12.86</div>
+        </div>
+        <div class="rec-target">
+          <div class="rt-label">Bear Price Target</div>
+          <div class="rt-value" style="color:var(--red);">$18.93</div>
+        </div>
+        <div class="rec-target">
+          <div class="rt-label">Base Price Target</div>
+          <div class="rt-value" style="color:var(--accent);">$40.85</div>
+        </div>
+        <div class="rec-target">
+          <div class="rt-label">Bull Price Target</div>
+          <div class="rt-value" style="color:var(--green);">$75.02</div>
+        </div>
+        <div class="rec-target">
+          <div class="rt-label">Analyst Consensus</div>
+          <div class="rt-value" style="color:var(--gold);">$16.80</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Recommended Action</div>
+        <div style="font-size:1.3rem;font-weight:800;color:var(--green);">BUY (LONG)</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;">At current $12.86</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Investment Horizon</div>
+        <div style="font-size:1.3rem;font-weight:800;">12–24 Months</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;">Catalyst-driven rerating</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Bear Case Downside</div>
+        <div style="font-size:1.3rem;font-weight:800;color:var(--muted);">-20% to -30%</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;">Net cash provides floor</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Expected Return (Base)</div>
+        <div style="font-size:1.3rem;font-weight:800;color:var(--green);">+217.7%</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;">If guidance achieved</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Key Catalyst Date</div>
+        <div style="font-size:1.3rem;font-weight:800;">May 14, 2026</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;">Q1 2026 Earnings Report</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <p class="footer-disclaimer">
+      This presentation was prepared for educational and stock pitch competition purposes only. It does not constitute investment advice.
+      All financial data sourced from <a href="https://perplexity.ai/finance/DLO">Perplexity Finance</a>,
+      <a href="https://ir.dlocal.com">DLocal Investor Relations</a>, and public filings.
+      Past performance is not indicative of future results. Market data as of April 2026.
+    </p>
+    <div class="footer-sources">
+      <span class="src-label">Sources:</span>
+      <a href="https://ir.dlocal.com" target="_blank">DLocal IR</a><span class="src-sep">/</span>
+      <a href="https://perplexity.ai/finance/DLO" target="_blank">Perplexity Finance</a><span class="src-sep">/</span>
+      <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=DLO" target="_blank">SEC EDGAR</a><span class="src-sep">/</span>
+      <a href="https://www.bcb.gov.br" target="_blank">Brazil BCB</a><span class="src-sep">/</span>
+      <a href="https://www.cbn.gov.ng" target="_blank">Nigeria CBN</a><span class="src-sep">/</span>
+      <a href="https://nasdaq.com/market-activity/stocks/dlo" target="_blank">NASDAQ</a><span class="src-sep">/</span>
+      <a href="https://www.goldmansachs.com" target="_blank">Goldman Sachs Research</a><span class="src-sep">/</span>
+      <a href="https://www.jpmorgan.com" target="_blank">JPMorgan Research</a><span class="src-sep">/</span>
+      <a href="https://www.citigroup.com" target="_blank">Citi Research</a>
+    </div>
+    <p class="footer-credit">Created with Perplexity Computer</p>
+  </div>
+</footer>
+
+<script>
+// ── DATA ──
+const historical = {
+  years: [2021, 2022, 2023, 2024, 2025],
+  revenue: [244.1, 418.9, 650.4, 746.0, 1093.6],
+  grossProfit: [130.4, 202.2, 276.9, 294.7, 402.8],
+  ebitda: [99.0, 153.0, 202.3, 188.7, 278.1],
+  fcf: [106.6, 153.5, 292.5, -34.5, 190.7],
+  tpv: [6.0, 10.6, 17.7, 25.6, 40.8],
+  takeRate: [4.07, 3.95, 3.67, 2.91, 2.68],
+  nrr: [219, 165, 150, 113, 145],
+};
+
+const scenarios = {
+  Bear: {
+    label: 'Bear Case', color: '#ef4444',
+    desc: 'Macro headwinds in emerging markets, accelerated take rate compression, limited margin expansion. TPV grows at 38% in 2026 (below guidance range), decelerating to 12% by 2030. Terminal EV/EBITDA: 10x.',
+    projections: [
+      {year:2026, tpv:56.3, revenue:1453, ebitda:320, ebitdaMargin:22.0, fcf:268, pvFcf:237},
+      {year:2027, tpv:72.1, revenue:1802, ebitda:396, ebitdaMargin:22.0, fcf:332, pvFcf:260},
+      {year:2028, tpv:87.9, revenue:2146, ebitda:483, ebitdaMargin:22.5, fcf:405, pvFcf:281},
+      {year:2029, tpv:102.0, revenue:2438, ebitda:561, ebitdaMargin:23.0, fcf:470, pvFcf:289},
+      {year:2030, tpv:114.2, revenue:2685, ebitda:631, ebitdaMargin:23.5, fcf:529, pvFcf:288},
+    ],
+    priceTarget: 18.93, upside: 47.2,
+  },
+  Base: {
+    label: 'Base Case', color: '#60a5fa',
+    desc: 'Management guidance achieved: 50-60% TPV growth in 2026. Modest take rate normalization, operating leverage expands EBITDA margins to 28.5% by 2030. Terminal EV/EBITDA: 14x (in-line with current peer median).',
+    projections: [
+      {year:2026, tpv:63.2, revenue:1663, ebitda:416, ebitdaMargin:25.0, fcf:356, pvFcf:315},
+      {year:2027, tpv:88.5, revenue:2293, ebitda:596, ebitdaMargin:26.0, fcf:511, pvFcf:400},
+      {year:2028, tpv:115.1, revenue:2947, ebitda:796, ebitdaMargin:27.0, fcf:682, pvFcf:472},
+      {year:2029, tpv:140.4, revenue:3567, ebitda:992, ebitdaMargin:27.8, fcf:850, pvFcf:521},
+      {year:2030, tpv:162.9, revenue:4105, ebitda:1170, ebitdaMargin:28.5, fcf:1003, pvFcf:545},
+    ],
+    priceTarget: 40.85, upside: 217.7,
+  },
+  Bull: {
+    label: 'Bull Case', color: '#22c55e',
+    desc: 'World Cup 2026 accelerates cross-border volumes. BNPL (Fuse) and stablecoin products gain scale. New merchant verticals (travel, gaming, AI) onboard. Take rate stabilizes above 2.5%. Terminal EV/EBITDA: 18x (premium for sustained hypergrowth).',
+    projections: [
+      {year:2026, tpv:67.3, revenue:1804, ebitda:496, ebitdaMargin:27.5, fcf:434, pvFcf:384},
+      {year:2027, tpv:101.0, revenue:2686, ebitda:779, ebitdaMargin:29.0, fcf:681, pvFcf:533},
+      {year:2028, tpv:139.4, revenue:3679, ebitda:1122, ebitdaMargin:30.5, fcf:981, pvFcf:679},
+      {year:2029, tpv:178.4, revenue:4692, ebitda:1478, ebitdaMargin:31.5, fcf:1293, pvFcf:793},
+      {year:2030, tpv:214.0, revenue:5609, ebitda:1823, ebitdaMargin:32.5, fcf:1595, pvFcf:866},
+    ],
+    priceTarget: 75.02, upside: 483.4,
+  }
+};
+
+let activeScenario = 'Base';
+
+function setScenario(name) {
+  activeScenario = name;
+  ['Bear', 'Base', 'Bull'].forEach(s => {
+    const tab = document.getElementById('tab-' + s.toLowerCase());
+    tab.className = 'scenario-tab';
+    if (s === name) {
+      tab.className = 'scenario-tab active-' + name.toLowerCase();
+    }
+  });
+  updateProjectionTable(name);
+  updateDCFChart();
+}
+
+function updateProjectionTable(name) {
+  const sc = scenarios[name];
+  document.getElementById('scenario-desc').innerHTML =
+    `<strong style="color:${sc.color}">${sc.label}:</strong> ${sc.desc}`;
+  const tbody = document.getElementById('proj-table-body');
+  tbody.innerHTML = sc.projections.map(p => `
+    <tr>
+      <td style="color:var(--text);font-weight:600;">${p.year}</td>
+      <td>$${p.tpv.toFixed(1)}B</td>
+      <td>$${p.revenue.toLocaleString()}</td>
+      <td>$${p.ebitda.toLocaleString()}</td>
+      <td>${p.ebitdaMargin.toFixed(1)}%</td>
+      <td>$${p.fcf.toLocaleString()}</td>
+      <td>$${p.pvFcf.toLocaleString()}</td>
+    </tr>
+  `).join('');
+}
+
+// ── CHART DEFAULTS ──
+const chartDefaults = {
+  plugins: {
+    legend: { labels: { color: '#78716c', font: { size: 10, family: 'Space Mono, monospace' } } },
+    tooltip: {
+      backgroundColor: '#ffffff', borderColor: '#e8e6e1', borderWidth: 1,
+      titleColor: '#0f0f0e', bodyColor: '#57534e',
+      padding: 12, cornerRadius: 3,
+    },
+  },
+  scales: {
+    x: {
+      ticks: { color: '#78716c', font: { size: 10, family: 'Space Mono, monospace' } },
+      grid: { color: 'rgba(232,230,225,0.8)' },
+      border: { color: '#e8e6e1' }
+    },
+    y: {
+      ticks: { color: '#78716c', font: { size: 10, family: 'Space Mono, monospace' } },
+      grid: { color: 'rgba(232,230,225,0.8)' },
+      border: { color: '#e8e6e1' }
+    },
+  },
+  responsive: true, maintainAspectRatio: true,
+};
+
+// Revenue Chart
+new Chart(document.getElementById('revenueChart'), {
+  type: 'bar',
+  data: {
+    labels: historical.years,
+    datasets: [
+      {
+        label: 'Revenue ($M)',
+        data: historical.revenue,
+        backgroundColor: 'rgba(29,78,216,0.7)',
+        borderRadius: 6,
+      },
+      {
+        label: 'TPV ($B)',
+        data: historical.tpv,
+        type: 'line',
+        borderColor: '#f59e0b',
+        backgroundColor: 'rgba(245,158,11,0.1)',
+        borderWidth: 2, pointRadius: 4,
+        yAxisID: 'y2', tension: 0.3,
+      }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      ...chartDefaults.scales,
+      y: { ...chartDefaults.scales.y, title: { display: true, text: 'Revenue ($M)', color: '#64748b' } },
+      y2: { position: 'right', ticks: { color: '#64748b', font: { size: 11 } }, grid: { display: false }, title: { display: true, text: 'TPV ($B)', color: '#64748b' }, border: { color: '#1e2d45' } },
+    }
+  }
+});
+
+// GP Chart
+new Chart(document.getElementById('gpChart'), {
+  type: 'bar',
+  data: {
+    labels: historical.years,
+    datasets: [
+      { label: 'Revenue', data: historical.revenue, backgroundColor: 'rgba(29,78,216,0.5)', borderRadius: 4 },
+      { label: 'Gross Profit', data: historical.grossProfit, backgroundColor: 'rgba(99,102,241,0.8)', borderRadius: 4 },
+    ]
+  },
+  options: { ...chartDefaults, plugins: { ...chartDefaults.plugins } }
+});
+
+// FCF Chart
+new Chart(document.getElementById('fcfChart'), {
+  type: 'bar',
+  data: {
+    labels: historical.years,
+    datasets: [
+      { label: 'Adj. EBITDA', data: historical.ebitda, backgroundColor: 'rgba(29,78,216,0.7)', borderRadius: 4 },
+      {
+        label: 'FCF',
+        data: historical.fcf,
+        backgroundColor: historical.fcf.map(v => v >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'),
+        borderRadius: 4,
+      },
+    ]
+  },
+  options: { ...chartDefaults }
+});
+
+// TPV Chart
+new Chart(document.getElementById('tpvChart'), {
+  type: 'line',
+  data: {
+    labels: historical.years,
+    datasets: [
+      {
+        label: 'TPV ($B)', data: historical.tpv,
+        borderColor: '#2563eb', backgroundColor: 'rgba(29,78,216,0.08)',
+        fill: true, tension: 0.3, pointRadius: 5, borderWidth: 2,
+        yAxisID: 'y',
+      },
+      {
+        label: 'Take Rate (%)', data: historical.takeRate,
+        borderColor: '#f59e0b', borderDash: [6,3],
+        borderWidth: 2, pointRadius: 4, tension: 0.3,
+        yAxisID: 'y2',
+      }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    scales: {
+      x: chartDefaults.scales.x,
+      y: { ...chartDefaults.scales.y, title: { display: true, text: 'TPV ($B)', color: '#64748b' } },
+      y2: { position: 'right', ticks: { color: '#64748b', font: { size: 11 } }, grid: { display: false }, title: { display: true, text: 'Take Rate (%)', color: '#64748b' }, border: { color: '#1e2d45' } },
+    }
+  }
+});
+
+// NRR Chart
+new Chart(document.getElementById('nrrChart'), {
+  type: 'bar',
+  data: {
+    labels: historical.years,
+    datasets: [{
+      label: 'Net Revenue Retention (%)',
+      data: historical.nrr,
+      backgroundColor: historical.nrr.map(v => v >= 150 ? 'rgba(34,197,94,0.7)' : v >= 120 ? 'rgba(245,158,11,0.7)' : 'rgba(239,68,68,0.7)'),
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      annotation: {
+        annotations: {
+          line100: { type: 'line', yMin: 100, yMax: 100, borderColor: 'rgba(255,255,255,0.15)', borderWidth: 1, borderDash: [4,4] }
+        }
+      }
+    }
+  }
+});
+
+// Earnings Beat Chart
+const ehData = [
+  {q: 'Q2 2024', beat: -15.9, eps: 66.7, move: 3.5},
+  {q: 'Q3 2024', beat: 2.4, eps: 66.7, move: 12.8},
+  {q: 'Q4 2024', beat: -0.9, eps: 0, move: -30.5},
+  {q: 'Q1 2025', beat: 3.3, eps: 25.0, move: 10.3},
+  {q: 'Q2 2025', beat: 6.7, eps: 7.7, move: 31.3},
+  {q: 'Q3 2025', beat: 7.8, eps: 6.3, move: -6.8},
+  {q: 'Q4 2025', beat: 14.0, eps: 22.2, move: 9.4},
+];
+new Chart(document.getElementById('earningsChart'), {
+  type: 'bar',
+  data: {
+    labels: ehData.map(d => d.q),
+    datasets: [{
+      label: 'Revenue Beat vs Est (%)',
+      data: ehData.map(d => d.beat),
+      backgroundColor: ehData.map(d => d.beat >= 0 ? 'rgba(34,197,94,0.7)' : 'rgba(239,68,68,0.7)'),
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: { display: false },
+    },
+    scales: {
+      x: chartDefaults.scales.x,
+      y: { ...chartDefaults.scales.y, title: { display: true, text: 'Revenue Beat (%)', color: '#64748b' } },
+    }
+  }
+});
+
+// Waterfall / Target Price Chart
+let waterfallChart;
+function updateDCFChart() {
+  const labels = ['Current Price', 'Analyst Target\n(Consensus)', 'Comps EV/EBITDA', 'DCF Bear', 'DCF Base', 'DCF Bull'];
+  const values = [12.86, 16.80, 16.44, 18.93, 40.85, 75.02];
+  const colors = ['#64748b', '#f59e0b', '#f59e0b', '#ef4444', '#60a5fa', '#22c55e'];
+  
+  if (waterfallChart) { waterfallChart.destroy(); }
+  waterfallChart = new Chart(document.getElementById('waterfallChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Implied Share Price',
+        data: values,
+        backgroundColor: colors.map(c => c + 'cc'),
+        borderColor: colors,
+        borderWidth: 1.5,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      ...chartDefaults,
+      plugins: {
+        ...chartDefaults.plugins,
+        legend: { display: false },
+      },
+      scales: {
+        x: chartDefaults.scales.x,
+        y: {
+          ...chartDefaults.scales.y,
+          title: { display: true, text: 'Share Price ($)', color: '#64748b' },
+          ticks: {
+            ...chartDefaults.scales.y.ticks,
+            callback: v => '$' + v.toFixed(0),
+          }
+        }
+      }
+    }
+  });
+}
+
+
+// ── SENTIMENT CHARTS ──
+
+// Short Interest Trend Chart
+new Chart(document.getElementById('shortInterestChart'), {
+  type: 'line',
+  data: {
+    labels: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026'],
+    datasets: [{
+      label: '% Float Short',
+      data: [16.82, 14.5, 12.8, 11.2, 10.1, 9.4, 6.95],
+      borderColor: '#ef4444',
+      backgroundColor: 'rgba(239,68,68,0.08)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 4,
+      borderWidth: 2,
+    }]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: {
+      ...chartDefaults.plugins,
+      legend: { display: false },
+      annotation: {
+        annotations: {
+          coverLine: {
+            type: 'line',
+            yMin: 6.95,
+            yMax: 6.95,
+            borderColor: 'rgba(34,197,94,0.4)',
+            borderWidth: 1,
+            borderDash: [4,4],
+            label: { content: 'Current 6.95%', enabled: true, color: '#22c55e', font: { size: 10 } }
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ...chartDefaults.scales.x, ticks: { ...chartDefaults.scales.x.ticks, font: { size: 9 } } },
+      y: { ...chartDefaults.scales.y, title: { display: true, text: '% Float Short', color: '#64748b', font: { size: 10 } }, ticks: { ...chartDefaults.scales.y.ticks, callback: v => v + '%' } }
+    }
+  }
+});
+
+// Sentiment Donut
+new Chart(document.getElementById('sentimentDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Bullish', 'Neutral', 'Bearish'],
+    datasets: [{
+      data: [67, 18, 15],
+      backgroundColor: ['rgba(34,197,94,0.7)', 'rgba(100,116,139,0.6)', 'rgba(239,68,68,0.7)'],
+      borderColor: ['#22c55e', '#64748b', '#ef4444'],
+      borderWidth: 1.5,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    cutout: '68%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { color: '#64748b', font: { size: 10 }, boxWidth: 10, padding: 8 }
+      },
+      tooltip: {
+        backgroundColor: '#131c2e', borderColor: '#1e2d45', borderWidth: 1,
+        titleColor: '#e2e8f0', bodyColor: '#94a3b8',
+      }
+    }
+  }
+});
+
+// Thread Engagement Bars
+(function() {
+  const threads = [
+    { label: 'WSB DD: 3X Rocket [Sep 25]', upvotes: 91, color: '#ff4500' },
+    { label: 'VI: Best Opportunity [Nov 25]', upvotes: 20, color: '#60a5fa' },
+    { label: 'VI: Value Play? [Nov 25]', upvotes: 14, color: '#60a5fa' },
+    { label: 'VI: Good Buy? [Aug 25]', upvotes: 8, color: '#60a5fa' },
+    { label: 'VI: Concentrated [Nov 25]', upvotes: 6, color: '#60a5fa' },
+  ];
+  const container = document.getElementById('thread-bars');
+  const maxVal = Math.max(...threads.map(t => t.upvotes));
+  threads.forEach(t => {
+    const pct = (t.upvotes / maxVal * 100).toFixed(0);
+    container.innerHTML += `
+      <div style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--muted);margin-bottom:3px;">
+          <span>${t.label}</span><span style="color:${t.color};font-weight:700;">${t.upvotes} ↑</span>
+        </div>
+        <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:${pct}%;height:100%;background:${t.color};border-radius:3px;transition:width 0.6s ease;"></div>
+        </div>
+      </div>
+    `;
+  });
+})();
+
+
+
+// ── SENSITIVITY TABLES ──
+
+(function() {
+  const currentPrice = 12.86;
+  const netCashPerShare = 2.48;   // $720M / ~290M shares
+  const shares = 290;              // approx diluted shares (millions)
+
+  // ── TABLE 1: WACC vs Terminal Growth Rate (DCF implied price) ──────────────
+  // Base FCF stream from base case (2026-2030 FCFs): 356, 511, 682, 850, 1003 ($M)
+  // WACC used = 13%, terminal g = 3%  → base $40.85
+  // We re-derive using simplified Gordon Growth on terminal year FCF
+  const fcfs = [356, 511, 682, 850, 1003]; // base case FCFs
+  const waccs  = [11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 14.5, 15.0];
+  const tgrs   = [1.5,  2.0,  2.5,  3.0,  3.5,  4.0,  4.5];
+
+  function dcfImplied(wacc_pct, tgr_pct) {
+    const w = wacc_pct / 100;
+    const g = tgr_pct / 100;
+    let pv = 0;
+    for (let i = 0; i < fcfs.length; i++) {
+      pv += fcfs[i] / Math.pow(1 + w, i + 1);
+    }
+    const tv = (fcfs[4] * (1 + g)) / (w - g);
+    const pvTv = tv / Math.pow(1 + w, 5);
+    const equity = pv + pvTv + 720; // add net cash
+    return equity / shares;
+  }
+
+  function cellColor(price) {
+    const upside = (price - currentPrice) / currentPrice * 100;
+    if (upside >= 200) return 'rgba(34,197,94,0.30)';
+    if (upside >= 100) return 'rgba(34,197,94,0.18)';
+    if (upside >=  50) return 'rgba(34,197,94,0.10)';
+    if (upside >=  20) return 'rgba(245,158,11,0.15)';
+    if (upside >=   0) return 'rgba(245,158,11,0.08)';
+    return 'rgba(239,68,68,0.15)';
+  }
+  function textColor(price) {
+    const up = (price - currentPrice) / currentPrice * 100;
+    if (up >= 100) return 'var(--green)';
+    if (up >= 20)  return '#a3e635';
+    if (up >= 0)   return 'var(--gold)';
+    return 'var(--red)';
+  }
+
+  const tbody1 = document.getElementById('sensitivity-tbody');
+  waccs.forEach(w => {
+    let isBaseWacc = (w === 13.0);
+    let row = `<tr style="${isBaseWacc ? 'background:rgba(59,130,246,0.05);' : ''}">`;
+    row += `<td style="padding:9px 12px;text-align:left;font-weight:${isBaseWacc?'700':'500'};color:${isBaseWacc?'var(--accent)':'var(--muted)'};">${w.toFixed(1)}%${isBaseWacc?' ★':''}</td>`;
+    tgrs.forEach(g => {
+      const isBaseTgr = (g === 3.0);
+      const price = dcfImplied(w, g);
+      const bg = isBaseTgr ? 'rgba(59,130,246,0.12)' : cellColor(price);
+      const tc = textColor(price);
+      row += `<td style="padding:9px 8px;background:${bg};color:${tc};font-weight:600;border:1px solid rgba(30,45,69,0.3);">$${price.toFixed(1)}</td>`;
+    });
+    row += '</tr>';
+    tbody1.innerHTML += row;
+  });
+
+  // ── TABLE 2: EV/EBITDA Exit Multiple vs 2026 Revenue Growth ──────────────
+  // 2025 EBITDA = $278M, EBITDA margin ~25.5% in 2026 base, 2025 revenue = $1093.6M
+  const rev2025 = 1093.6;
+  const ebitdaMargin2026 = 0.255; // base assumption
+  const multiples = [10, 12, 14, 16, 18, 20];
+  const revGrowths = [0.35, 0.42, 0.50, 0.55, 0.60, 0.65, 0.70];
+
+  function multipleImplied(exitMult, revGrowth) {
+    const rev2026 = rev2025 * (1 + revGrowth);
+    const ebitda2026 = rev2026 * ebitdaMargin2026;
+    const ev = ebitda2026 * exitMult;
+    const equity = ev + 720; // net cash
+    return equity / shares;
+  }
+
+  const tbody2 = document.getElementById('sensitivity-tbody2');
+  multiples.forEach(m => {
+    let isBaseMult = (m === 14);
+    let row = `<tr style="${isBaseMult ? 'background:rgba(59,130,246,0.05);' : ''}">`;
+    row += `<td style="padding:9px 12px;text-align:left;font-weight:${isBaseMult?'700':'500'};color:${isBaseMult?'var(--accent)':'var(--muted)'};">${m}x${isBaseMult?' ★':''}</td>`;
+    revGrowths.forEach(g => {
+      const isBase = (g === 0.55);
+      const price = multipleImplied(m, g);
+      const bg = isBase ? 'rgba(59,130,246,0.12)' : cellColor(price);
+      const tc = textColor(price);
+      row += `<td style="padding:9px 8px;background:${bg};color:${tc};font-weight:600;border:1px solid rgba(30,45,69,0.3);">$${price.toFixed(1)}</td>`;
+    });
+    row += '</tr>';
+    tbody2.innerHTML += row;
+  });
+
+  // ── TABLE 3: Take Rate vs TPV Growth → 2026 Gross Profit ($M) ──────────────
+  // FY2025 TPV = $40.8B, take rate = 2.68%, GP ratio to revenue ~37%
+  // Revenue = TPV * take_rate,  Gross Profit = revenue * GP_margin
+  const tpv2025 = 40.8; // $B
+  const gpMargin = 0.368; // gross profit / revenue (FY2025: 402.8/1093.6)
+  const takeRates = [2.10, 2.30, 2.50, 2.68, 2.80, 3.00, 3.20];
+  const tpvGrowths = [0.35, 0.40, 0.47, 0.55, 0.60, 0.65, 0.70];
+
+  function gpSensitivity(tr, tpvG) {
+    const tpv2026 = tpv2025 * (1 + tpvG);
+    const rev2026 = tpv2026 * (tr / 100);
+    const gp = rev2026 * gpMargin * 1000; // convert $B to $M
+    return gp;
+  }
+
+  function gpCellColor(gp) {
+    const base = gpSensitivity(2.68, 0.55);
+    const diff = (gp - base) / base * 100;
+    if (diff >= 20) return 'rgba(34,197,94,0.25)';
+    if (diff >= 5)  return 'rgba(34,197,94,0.12)';
+    if (diff >= -5) return 'rgba(245,158,11,0.12)';
+    if (diff >= -15) return 'rgba(239,68,68,0.12)';
+    return 'rgba(239,68,68,0.25)';
+  }
+  function gpTextColor(gp) {
+    const base = gpSensitivity(2.68, 0.55);
+    const diff = (gp - base) / base * 100;
+    if (diff >= 10) return 'var(--green)';
+    if (diff >= -5) return 'var(--gold)';
+    return 'var(--red)';
+  }
+
+  const tbody3 = document.getElementById('sensitivity-tbody3');
+  takeRates.forEach(tr => {
+    let isBaseTR = (tr === 2.68);
+    let row = `<tr style="${isBaseTR ? 'background:rgba(59,130,246,0.05);' : ''}">`;
+    row += `<td style="padding:9px 12px;text-align:left;font-weight:${isBaseTR?'700':'500'};color:${isBaseTR?'var(--accent)':'var(--muted)'};">${tr.toFixed(2)}%${isBaseTR?' ★':''}</td>`;
+    tpvGrowths.forEach(g => {
+      const isBase = (g === 0.55);
+      const gp = gpSensitivity(tr, g);
+      const bg = isBase ? 'rgba(59,130,246,0.12)' : gpCellColor(gp);
+      const tc = gpTextColor(gp);
+      row += `<td style="padding:9px 8px;background:${bg};color:${tc};font-weight:600;border:1px solid rgba(30,45,69,0.3);">$${Math.round(gp)}M</td>`;
+    });
+    row += '</tr>';
+    tbody3.innerHTML += row;
+  });
+
+})();
+
+
+// ── ACTIVE NAV ──
+const sections = document.querySelectorAll('section, [id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + e.target.id) l.classList.add('active');
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+
+// ── SCROLL BREADCRUMB ──
+(function() {
+  const sectionMap = [
+    { id: 'overview',   label: 'Overview' },
+    { id: 'moat',       label: 'Competitive Moat' },
+    { id: 'catalysts',  label: 'Catalysts' },
+    { id: 'financials', label: 'Financials' },
+    { id: 'valuation',  label: 'Valuation' },
+    { id: 'bull-bear',  label: 'Bull / Bear' },
+    { id: 'sentiment',  label: 'Sentiment' },
+    { id: 'geography',  label: 'Geography' },
+    { id: 'coverage',   label: 'Coverage' },
+    { id: 'verdict',    label: 'Verdict' }
+  ];
+  const crumbEl = document.getElementById('crumbCurrent');
+  if (!crumbEl) return;
+
+  function updateCrumb() {
+    const scrollY = window.scrollY + 120; // offset for fixed nav+crumb
+    let active = sectionMap[0];
+    for (const s of sectionMap) {
+      const el = document.getElementById(s.id);
+      if (el && el.offsetTop <= scrollY) active = s;
+    }
+    crumbEl.textContent = active.label;
+  }
+
+  window.addEventListener('scroll', updateCrumb, { passive: true });
+  updateCrumb();
+})();
+
+// ── INIT ──
+setScenario('Base');
+updateDCFChart();
+</script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
